@@ -14,7 +14,7 @@ public class controller {
         liga_model = model;
         liga_view = view;
 
-        lista = model.select_1kolejka();
+        lista = model.select_30kolejka();
         view.getprzycisk_uruchom().addActionListener(new NasluchiwaczPrzyciskow());
     }
 
