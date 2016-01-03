@@ -27,6 +27,7 @@ public class view extends JFrame {
     private JLabel gornynapis;
     private JLabel status;
     public static JButton przycisk_uruchom = new JButton("Uruchom");
+    public static JTextArea select = new JTextArea(8, 60);
 
     public void glowneOkno() {
         okno = new JFrame(tytul);
@@ -42,33 +43,22 @@ public class view extends JFrame {
         okno.add(panel);
         okno.add(gornynapis);
     }
-    
+
     void wynikselect(ArrayList wynik) {
-        gornynapis.setText("Control in action: JTextArea");
 
-        ArrayList<String> lista = new ArrayList<>();
-        lista = wynik;
-
-        String listawyniku = "";
-        for (String s : lista) {
-            listawyniku += s; }
-
-        final JTextArea select = new JTextArea(listawyniku, 8, 60);
         JScrollPane pasek = new JScrollPane(select);
 
-//        JButton przycisk_uruchom = new JButton("Uruchom");
-        
         przycisk_uruchom.setActionCommand("Uruchom");
         przycisk_uruchom.addActionListener(null);
-        
+
         panel.add(przycisk_uruchom);
         panel.add(select);
         panel.add(pasek);
-        
+
         okno.setVisible(true);
     }
 
-     public static JButton getprzycisk_uruchom() {
+    public static JButton getprzycisk_uruchom() {
         return przycisk_uruchom;
     }
 

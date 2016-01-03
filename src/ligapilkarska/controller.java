@@ -1,29 +1,23 @@
 package ligapilkarska;
 
 import java.awt.event.*;
+import java.util.*;
 
 public class controller {
 
     private ActionListener akcja;
     private model liga_model;
     private view liga_view;
+    private java.util.ArrayList<String> lista = new ArrayList<>();
 
     controller(model model, view view) {
 //        System.out.println("To jest kontroler.");
         liga_model = model;
         liga_view = view;
-        
-        view.getprzycisk_uruchom().addActionListener(new NasluchiwaczPrzyciskow());
-    }
 
-    public void uruchom() {
-        akcja = new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                model.uruchom();
-                System.out.println("test");
-            }
-        };
-        view.getprzycisk_uruchom().addActionListener(akcja);
+        lista = model.select();
+
+        view.getprzycisk_uruchom().addActionListener(new NasluchiwaczPrzyciskow());
     }
 
     class MultiplyListener implements ActionListener {
@@ -39,12 +33,20 @@ public class controller {
 
         }
     }
-    
+
     private class NasluchiwaczPrzyciskow implements ActionListener {
+
         public void actionPerformed(ActionEvent e) {
             String command = e.getActionCommand();
             if (command.equals("Uruchom")) {
-                System.out.println("teest!!");
+
+                String listawyniku = "";
+                for (String s : lista) {
+                    listawyniku += s;
+                }
+                view.select.append(listawyniku);
+                System.out.println(listawyniku);
+                System.out.println("Dodano wynik selecta do pola JTextArea.");
             }
         }
     }
