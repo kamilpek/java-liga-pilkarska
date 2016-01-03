@@ -38,15 +38,11 @@ public class view extends JFrame {
 
         panel = new JPanel();
         panel.setLayout(new FlowLayout());
-        panel.add(przycisk_uruchom);
+//        panel.add(przycisk_uruchom);
         okno.add(panel);
-//        okno.add(gornynapis);
+        okno.add(gornynapis);
     }
     
-    public static JButton getprzycisk_uruchom() {
-        return przycisk_uruchom;
-    }
-
     void wynikselect(ArrayList wynik) {
         gornynapis.setText("Control in action: JTextArea");
 
@@ -61,13 +57,19 @@ public class view extends JFrame {
         JScrollPane pasek = new JScrollPane(select);
 
 //        JButton przycisk_uruchom = new JButton("Uruchom");
-
+        
+        przycisk_uruchom.setActionCommand("Uruchom");
+        przycisk_uruchom.addActionListener(null);
+        
+        panel.add(przycisk_uruchom);
         panel.add(select);
         panel.add(pasek);
         
         okno.setVisible(true);
     }
 
-    
+     public static JButton getprzycisk_uruchom() {
+        return przycisk_uruchom;
+    }
 
 }

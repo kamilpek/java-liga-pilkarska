@@ -63,15 +63,15 @@ public class model {
         return this.stat;
     }
 
-    ArrayList<String> select() {
+    public ArrayList<String> select() {
         Select select = new Select(stat);
         return select.listawynikowa;
     }
     
-    public static String uruchom(){
+    public static void uruchom(){
         String tekst = "test klasy controller";
-//        System.out.println(tekst);
-        return tekst;
+        System.out.println(tekst);
+//        return tekst;
     }
 }
 
