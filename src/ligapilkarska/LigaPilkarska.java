@@ -8,7 +8,7 @@ package ligapilkarska;
  */
 public class LigaPilkarska {
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
 
         model model = new model();
         view view = new view(model);

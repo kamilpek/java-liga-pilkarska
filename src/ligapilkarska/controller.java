@@ -10,43 +10,25 @@ public class controller {
     private view liga_view;
     private java.util.ArrayList<String> lista = new ArrayList<>();
 
-    controller(model model, view view) {
-//        System.out.println("To jest kontroler.");
+    controller(model model, view view){
         liga_model = model;
         liga_view = view;
 
-        lista = model.select();
-
+        lista = model.select_1kolejka();
         view.getprzycisk_uruchom().addActionListener(new NasluchiwaczPrzyciskow());
-    }
-
-    class MultiplyListener implements ActionListener {
-
-        public void actionPerformed(ActionEvent e) {
-
-        }
-    }
-
-    class ClearListener implements ActionListener {
-
-        public void actionPerformed(ActionEvent e) {
-
-        }
     }
 
     private class NasluchiwaczPrzyciskow implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
             String command = e.getActionCommand();
-            if (command.equals("Uruchom")) {
+            if (command.equals("1-kolejka")) {
 
                 String listawyniku = "";
                 for (String s : lista) {
                     listawyniku += s;
                 }
                 view.select.append(listawyniku);
-                System.out.println(listawyniku);
-                System.out.println("Dodano wynik selecta do pola JTextArea.");
             }
         }
     }
