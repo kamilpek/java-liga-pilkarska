@@ -12,7 +12,7 @@ public class view extends JFrame {
 
     view(model model) {
         liga_model = model;
-//        lista = model.select();
+        lista = model.select();
 
         glowneOkno();
         wynikselect(lista);
