@@ -1,7 +1,6 @@
 package ligapilkarska;
 
 import java.awt.*;
-import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.util.*;
 
