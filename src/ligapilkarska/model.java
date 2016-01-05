@@ -65,20 +65,28 @@ public class model {
     }
     
     public String select_pokaztabele(){
-        ArrayList<String> tabela = new ArrayList<>();
-        String tabela_koncowa = "lol";
+        ArrayList<String> tabela_koniec = new ArrayList<>();
+        ArrayList<String> tabela_gosp_nazwa = new ArrayList<>();
+        ArrayList<String> tabela_gosc_nazwa = new ArrayList<>();
+        ArrayList<Integer> tabela_gosp_pkt = new ArrayList<>();
+        ArrayList<Integer> tabela_gosc_pkt = new ArrayList<>();
+        
+        int i = 0;
+        
+        String tabela_koncowa = null;
         String zaptyanie_pokaztabele = null;        
-        String zapytanie_punktygospodarz = "SELECT nazwa, sum(gosp_pkt) FROM mecz, klub WHERE mecz.gospodarz = klub.id GROUP BY nazwa;";
-        String zapytanie_punktygosc = "SELECT nazwa, sum(gosc_pkt) FROM mecz, klub WHERE mecz.gosc = klub.id GROUP BY nazwa;";
+        String zapytanie_punktygospodarz = "SELECT nazwa, sum(gosp_pkt) as punkty FROM mecz, klub WHERE mecz.gospodarz = klub.id GROUP BY nazwa ORDER BY nazwa;";
+        String zapytanie_punktygosc = "SELECT nazwa, sum(gosc_pkt) as punkty FROM mecz, klub WHERE mecz.gosc = klub.id GROUP BY nazwa ORDER BY nazwa;";
          
         
         try{
            ResultSet rs_punktygospodarz = stat.executeQuery(zapytanie_punktygospodarz);
            while(rs_punktygospodarz.next()){
                String nazwa_gosp = rs_punktygospodarz.getString("nazwa");
-               int punkty_gosp = rs_punktygospodarz.getInt("sum");                            
-            }
-           
+               tabela_gosp_nazwa.add(nazwa_gosp);
+               int punkty_gosp = rs_punktygospodarz.getInt("punkty");
+               tabela_gosp_pkt.add(punkty_gosp);
+            }           
         } catch (SQLException e) {
             System.err.println("ERROR select_pokaztabele_punktygospodarz!!: "+ e.getMessage());
             System.exit(0);
@@ -88,12 +96,28 @@ public class model {
             ResultSet rs_punktygosc = stat.executeQuery(zapytanie_punktygosc);
             while(rs_punktygosc.next()){               
                String nazwa_gosc = rs_punktygosc.getString("nazwa");
-               int punkty_gosc = rs_punktygosc.getInt("sum");               
-            }         
-                       
+               tabela_gosc_nazwa.add(nazwa_gosc);
+               int punkty_gosc = rs_punktygosc.getInt("punkty");
+               tabela_gosc_pkt.add(punkty_gosc);
+            }                       
         } catch (SQLException e) {
             System.err.println("ERROR select_pokaztabele_punktygosc!!: "+ e.getMessage());
             System.exit(0);            
+        }        
+        
+        for(int x = 0; x < 15; x++){
+            i++;
+            if(tabela_gosp_nazwa.get(i).equals(tabela_gosc_nazwa.get(i))){
+                int punkty = tabela_gosp_pkt.get(i) + tabela_gosc_pkt.get(i);
+                String klub = i + ". " + tabela_gosp_nazwa.get(i) + "\t" + punkty + "\n";
+                tabela_koniec.add(klub);
+            }
+        }
+        
+//        tabela_koniec.add("lol");
+        tabela_koncowa = "";        
+        for (String s : tabela_koniec) {
+            tabela_koncowa += s;
         }        
         
         return tabela_koncowa;

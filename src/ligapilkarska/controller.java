@@ -91,6 +91,7 @@ public class controller {
             
             String command = e.getActionCommand();
             if (command.equals("pokaztabele")) {
+                view.select.setText(null);
                 view.select.setText(lista_pokaztabele);
                 System.out.println(lista_pokaztabele);
             }

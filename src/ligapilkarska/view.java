@@ -31,7 +31,7 @@ public class view extends JFrame {
     }
 
     private int szerokosc = 800;
-    private int wysokosc = 600;
+    private int wysokosc = 1200;
     private final String tytul = "Liga Piłkarska";
 
     private JFrame okno;
@@ -40,7 +40,7 @@ public class view extends JFrame {
     public static JButton przycisk_pokaztabele = new JButton("Pokaż Tabelę");
     public static JButton przycisk_2kolejka = new JButton("2. Kolejka");
     public static JButton przycisk_test = new JButton("Przycisk testowy");
-    public static JTextArea select = new JTextArea(8, 60);
+    public static JTextArea select = new JTextArea(16, 60);
     public static JComboBox lista_selectkolejki = new JComboBox();
         
 
@@ -93,10 +93,11 @@ public class view extends JFrame {
 
         panel = new JPanel();
         panel.setLayout(new FlowLayout());
+        okno.add(przycisk_pokaztabele);
         okno.add(panel);
-        okno.add(gornynapis);
+//        okno.add(gornynapis);
         panel.add(lista_selectkolejki);
-        panel.add(przycisk_pokaztabele);
+
 //        panel.add(przycisk_1kolejka);
 //        panel.add(przycisk_2kolejka);
 //        panel.add(przycisk_test);        
