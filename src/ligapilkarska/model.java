@@ -70,8 +70,11 @@ public class model {
         ArrayList<String> tabela_gosc_nazwa = new ArrayList<>();
         ArrayList<Integer> tabela_gosp_pkt = new ArrayList<>();
         ArrayList<Integer> tabela_gosc_pkt = new ArrayList<>();
+        ArrayList<String> tabela_klub_nazwa = new ArrayList<>();
+        ArrayList<Integer> tabela_klub_pkt = new ArrayList<>();
         
         int i = 0;
+        int j = 0;
         
         String tabela_koncowa = null;
         String zaptyanie_pokaztabele = null;        
@@ -105,16 +108,42 @@ public class model {
             System.exit(0);            
         }        
         
-        for(int x = 0; x < 15; x++){
-            i++;
+        for(int x = 0; x < 15; x++){            
             if(tabela_gosp_nazwa.get(i).equals(tabela_gosc_nazwa.get(i))){
                 int punkty = tabela_gosp_pkt.get(i) + tabela_gosc_pkt.get(i);
                 String klub = i + ". " + tabela_gosp_nazwa.get(i) + "\t" + punkty + "\n";
                 tabela_koniec.add(klub);
+                tabela_klub_nazwa.add(tabela_gosp_nazwa.get(i));
+                tabela_klub_pkt.add(tabela_gosc_pkt.get(i));
             }
+            i++;
         }
         
-//        tabela_koniec.add("lol");
+        for(int x = 0; x < 15; x++){
+            String nazwa = tabela_klub_nazwa.get(j);
+            int punkty = tabela_klub_pkt.get(j);
+            String tabela_truncate = "TRUNCATE TABLE tabela;";
+            String tabela_insert = "INSERT INTO tabela(nazwa, punkty) VALUES ('" + nazwa + "', " + punkty + ");";
+            try{
+//                stat.executeQuery(tabela_truncate);
+                stat.executeQuery(tabela_insert);
+            } catch (SQLException e) {
+                System.err.println("ERROR select_pokaztabele_tabelapomocnicza: "+ e.getMessage());
+            }
+            j++;
+        }
+        
+        try{
+            ResultSet rs_tabela = stat.executeQuery("SELECT nazwa, punkty FROM tabelaorder by punkty dsec;");
+            while(rs_tabela.next()){
+                String tabela_nazwa = rs_tabela.getString("nazwa");
+                int tabela_punkty = rs_tabela.getInt("punkty");
+               
+            }
+        } catch (SQLException e) {
+            System.err.println("ERROR select_pokaztabele_selecttabela"+ e.getMessage());
+        }
+        
         tabela_koncowa = "";        
         for (String s : tabela_koniec) {
             tabela_koncowa += s;
