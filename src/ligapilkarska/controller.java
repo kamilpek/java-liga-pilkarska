@@ -37,6 +37,7 @@ public class controller {
     private final String lista_28kolejka;
     private final String lista_29kolejka;
     private final String lista_30kolejka;
+    private final String lista_pokaztabele;
     
     String polecenie = null;
 
@@ -74,8 +75,9 @@ public class controller {
         lista_28kolejka = model.select_zlozeniekolejki(28);
         lista_29kolejka = model.select_zlozeniekolejki(29);
         lista_30kolejka = model.select_zlozeniekolejki(30);
+        lista_pokaztabele = model.select_pokaztabele();
         
-        view.getprzycisk_1kolejka().addActionListener(new NasluchiwaczPrzyciskow());
+        view.getprzycisk_pokaztabele().addActionListener(new NasluchiwaczPrzyciskow());
         view.getprzycisk_2kolejka().addActionListener(new NasluchiwaczPrzyciskow());
         view.getlista_selectkolejki().addActionListener(new NasluchiwaczPrzyciskow());
         
@@ -85,7 +87,13 @@ public class controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            polecenie = view.getlista_selectkolejki().getSelectedItem().toString();                      
+            polecenie = view.getlista_selectkolejki().getSelectedItem().toString();
+            
+            String command = e.getActionCommand();
+            if (command.equals("pokaztabele")) {
+                view.select.setText(lista_pokaztabele);
+                System.out.println(lista_pokaztabele);
+            }
                         
             switch(polecenie){
                 case "1. kolejka.": view.select.setText(lista_1kolejka); break;

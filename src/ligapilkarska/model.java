@@ -64,6 +64,41 @@ public class model {
         return this.stat;
     }
     
+    public String select_pokaztabele(){
+        ArrayList<String> tabela = new ArrayList<>();
+        String tabela_koncowa = "lol";
+        String zaptyanie_pokaztabele = null;        
+        String zapytanie_punktygospodarz = "SELECT nazwa, sum(gosp_pkt) FROM mecz, klub WHERE mecz.gospodarz = klub.id GROUP BY nazwa;";
+        String zapytanie_punktygosc = "SELECT nazwa, sum(gosc_pkt) FROM mecz, klub WHERE mecz.gosc = klub.id GROUP BY nazwa;";
+         
+        
+        try{
+           ResultSet rs_punktygospodarz = stat.executeQuery(zapytanie_punktygospodarz);
+           while(rs_punktygospodarz.next()){
+               String nazwa_gosp = rs_punktygospodarz.getString("nazwa");
+               int punkty_gosp = rs_punktygospodarz.getInt("sum");                            
+            }
+           
+        } catch (SQLException e) {
+            System.err.println("ERROR select_pokaztabele_punktygospodarz!!: "+ e.getMessage());
+            System.exit(0);
+        }
+        
+        try{
+            ResultSet rs_punktygosc = stat.executeQuery(zapytanie_punktygosc);
+            while(rs_punktygosc.next()){               
+               String nazwa_gosc = rs_punktygosc.getString("nazwa");
+               int punkty_gosc = rs_punktygosc.getInt("sum");               
+            }         
+                       
+        } catch (SQLException e) {
+            System.err.println("ERROR select_pokaztabele_punktygosc!!: "+ e.getMessage());
+            System.exit(0);            
+        }        
+        
+        return tabela_koncowa;
+    }
+    
     public String select_zlozeniekolejki(int numer_kolejki){
         
         String kolejka_data = null;
@@ -109,6 +144,7 @@ public class model {
             select_zlozeniekolejki = new Select(stat, rs);
         } catch (SQLException e) {
             System.err.println("ERROR!!: "+ e.getMessage());
+            System.exit(0);
         }
         return select_zlozeniekolejki.listawyniku;
 //        return null;

@@ -14,8 +14,8 @@ public class view extends JFrame {
         TextArea_Select();                
     }
     
-    public static JButton getprzycisk_1kolejka() {
-        return przycisk_1kolejka;
+    public static JButton getprzycisk_pokaztabele() {
+        return przycisk_pokaztabele;
     }
     
     public static JButton getprzycisk_2kolejka() {
@@ -37,11 +37,12 @@ public class view extends JFrame {
     private JFrame okno;
     private JPanel panel;
     private JLabel gornynapis;
-    public static JButton przycisk_1kolejka = new JButton("1. Kolejka");
+    public static JButton przycisk_pokaztabele = new JButton("Pokaż Tabelę");
     public static JButton przycisk_2kolejka = new JButton("2. Kolejka");
     public static JButton przycisk_test = new JButton("Przycisk testowy");
     public static JTextArea select = new JTextArea(8, 60);
     public static JComboBox lista_selectkolejki = new JComboBox();
+        
 
     public void TextArea_Select() {
         okno = new JFrame(tytul);
@@ -51,11 +52,12 @@ public class view extends JFrame {
 
         gornynapis = new JLabel("test", JLabel.CENTER);
         JScrollPane ScrollPane = new JScrollPane(select);
-        przycisk_1kolejka.setActionCommand("1-kolejka");
+        przycisk_pokaztabele.setActionCommand("pokaztabele");
         przycisk_2kolejka.setActionCommand("2-kolejka");
         przycisk_test.setActionCommand("test");
         
         lista_selectkolejki.setBounds(80, 40, 170, 20);
+        lista_selectkolejki.addItem("Wybierz kolejkę.");
         lista_selectkolejki.addItem("1. kolejka.");
         lista_selectkolejki.addItem("2. kolejka.");
         lista_selectkolejki.addItem("3. kolejka.");
@@ -86,15 +88,18 @@ public class view extends JFrame {
         lista_selectkolejki.addItem("28. kolejka.");
         lista_selectkolejki.addItem("29. kolejka.");
         lista_selectkolejki.addItem("30. kolejka.");
+        
+        
 
         panel = new JPanel();
         panel.setLayout(new FlowLayout());
         okno.add(panel);
         okno.add(gornynapis);
         panel.add(lista_selectkolejki);
-        panel.add(przycisk_1kolejka);
-        panel.add(przycisk_2kolejka);
-        panel.add(przycisk_test);        
+        panel.add(przycisk_pokaztabele);
+//        panel.add(przycisk_1kolejka);
+//        panel.add(przycisk_2kolejka);
+//        panel.add(przycisk_test);        
         panel.add(select);
         panel.add(ScrollPane);
         okno.setVisible(true);
