@@ -75,12 +75,14 @@ public class model {
         
         int i = 0;
         int j = 0;
+        int k = 0;
         
         String tabela_koncowa = null;
         String zaptyanie_pokaztabele = null;        
         String zapytanie_punktygospodarz = "SELECT nazwa, sum(gosp_pkt) as punkty FROM mecz, klub WHERE mecz.gospodarz = klub.id GROUP BY nazwa ORDER BY nazwa;";
         String zapytanie_punktygosc = "SELECT nazwa, sum(gosc_pkt) as punkty FROM mecz, klub WHERE mecz.gosc = klub.id GROUP BY nazwa ORDER BY nazwa;";
-         
+        String tabela_create = "CREATE TABLE tabela(id serial, nazwa varchar(16) not null, punkty int not null);";
+        String tabela_drop = "DROP TABLE IF EXISTS tabela;";         
         
         try{
            ResultSet rs_punktygospodarz = stat.executeQuery(zapytanie_punktygospodarz);
@@ -112,21 +114,26 @@ public class model {
             if(tabela_gosp_nazwa.get(i).equals(tabela_gosc_nazwa.get(i))){
                 int punkty = tabela_gosp_pkt.get(i) + tabela_gosc_pkt.get(i);
                 String klub = i + ". " + tabela_gosp_nazwa.get(i) + "\t" + punkty + "\n";
-                tabela_koniec.add(klub);
                 tabela_klub_nazwa.add(tabela_gosp_nazwa.get(i));
-                tabela_klub_pkt.add(tabela_gosc_pkt.get(i));
+                tabela_klub_pkt.add(punkty);
             }
             i++;
+        }
+        
+        try{
+            stat.execute(tabela_drop);
+            stat.execute(tabela_create);
+        } catch (SQLException e){
+            System.err.println("ERROR select_pokaztabele_drop/creatae: "+ e.getMessage());
         }
         
         for(int x = 0; x < 15; x++){
             String nazwa = tabela_klub_nazwa.get(j);
             int punkty = tabela_klub_pkt.get(j);
-            String tabela_truncate = "TRUNCATE TABLE tabela;";
+            
             String tabela_insert = "INSERT INTO tabela(nazwa, punkty) VALUES ('" + nazwa + "', " + punkty + ");";
-            try{
-//                stat.executeQuery(tabela_truncate);
-                stat.executeQuery(tabela_insert);
+            try{                
+                stat.execute(tabela_insert);
             } catch (SQLException e) {
                 System.err.println("ERROR select_pokaztabele_tabelapomocnicza: "+ e.getMessage());
             }
@@ -134,11 +141,13 @@ public class model {
         }
         
         try{
-            ResultSet rs_tabela = stat.executeQuery("SELECT nazwa, punkty FROM tabelaorder by punkty dsec;");
+            ResultSet rs_tabela = stat.executeQuery("SELECT nazwa, punkty FROM tabela ORDER BY punkty DESC;");
             while(rs_tabela.next()){
+                k++;
                 String tabela_nazwa = rs_tabela.getString("nazwa");
                 int tabela_punkty = rs_tabela.getInt("punkty");
-               
+                String rekord = k + ". " + tabela_nazwa + "\t\t" + tabela_punkty + "\n";
+                tabela_koniec.add(rekord);               
             }
         } catch (SQLException e) {
             System.err.println("ERROR select_pokaztabele_selecttabela"+ e.getMessage());
