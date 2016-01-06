@@ -37,7 +37,7 @@ public class controller {
     private final String lista_28kolejka;
     private final String lista_29kolejka;
     private final String lista_30kolejka;
-    private String lista_pokaztabele;
+    private final String lista_pokaztabele;
     
     String polecenie = null;
 

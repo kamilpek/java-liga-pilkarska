@@ -67,10 +67,12 @@ public class model {
     public String select_pokaztabele(){
         ArrayList<String> tabela_koniec = new ArrayList<>();
         ArrayList<String> tabela_gosp_nazwa = new ArrayList<>();
+        ArrayList<String> tabela_gosp_miasto = new ArrayList<>();
         ArrayList<String> tabela_gosc_nazwa = new ArrayList<>();
         ArrayList<Integer> tabela_gosp_pkt = new ArrayList<>();
-        ArrayList<Integer> tabela_gosc_pkt = new ArrayList<>();
+        ArrayList<Integer> tabela_gosc_pkt = new ArrayList<>();        
         ArrayList<String> tabela_klub_nazwa = new ArrayList<>();
+        ArrayList<String> tabela_klub_miasto = new ArrayList<>();
         ArrayList<Integer> tabela_klub_pkt = new ArrayList<>();
         
         int i = 0;
@@ -79,9 +81,9 @@ public class model {
         
         String tabela_koncowa = null;
         String zaptyanie_pokaztabele = null;        
-        String zapytanie_punktygospodarz = "SELECT nazwa, sum(gosp_pkt) as punkty FROM mecz, klub WHERE mecz.gospodarz = klub.id GROUP BY nazwa ORDER BY nazwa;";
+        String zapytanie_punktygospodarz = "SELECT nazwa, miasto, sum(gosp_pkt) as punkty FROM mecz, klub WHERE mecz.gospodarz = klub.id GROUP BY nazwa, miasto ORDER BY nazwa;";
         String zapytanie_punktygosc = "SELECT nazwa, sum(gosc_pkt) as punkty FROM mecz, klub WHERE mecz.gosc = klub.id GROUP BY nazwa ORDER BY nazwa;";
-        String tabela_create = "CREATE TABLE tabela(id serial, nazwa varchar(16) not null, punkty int not null);";
+        String tabela_create = "CREATE TABLE tabela(id serial, nazwa varchar(16) not null, miasto varchar(16) not null, punkty int not null);";
         String tabela_drop = "DROP TABLE IF EXISTS tabela;";         
         
         try{
@@ -89,6 +91,8 @@ public class model {
            while(rs_punktygospodarz.next()){
                String nazwa_gosp = rs_punktygospodarz.getString("nazwa");
                tabela_gosp_nazwa.add(nazwa_gosp);
+               String miasto_gosp = rs_punktygospodarz.getString("miasto");
+               tabela_gosp_miasto.add(miasto_gosp);
                int punkty_gosp = rs_punktygospodarz.getInt("punkty");
                tabela_gosp_pkt.add(punkty_gosp);
             }           
@@ -110,10 +114,10 @@ public class model {
             System.exit(0);            
         }        
         
-        for(int x = 0; x < 15; x++){            
+        for(int x = 0; x < 16; x++){            
             if(tabela_gosp_nazwa.get(i).equals(tabela_gosc_nazwa.get(i))){
                 int punkty = tabela_gosp_pkt.get(i) + tabela_gosc_pkt.get(i);
-                String klub = i + ". " + tabela_gosp_nazwa.get(i) + "\t" + punkty + "\n";
+                String klub = i + ". " + tabela_gosp_nazwa.get(i) + " " + tabela_gosp_miasto.get(i) + "\t" + punkty + "\n";
                 tabela_klub_nazwa.add(tabela_gosp_nazwa.get(i));
                 tabela_klub_pkt.add(punkty);
             }
@@ -127,26 +131,28 @@ public class model {
             System.err.println("ERROR select_pokaztabele_drop/creatae: "+ e.getMessage());
         }
         
-        for(int x = 0; x < 15; x++){
+        for(int x = 0; x < 16; x++){
             String nazwa = tabela_klub_nazwa.get(j);
+            String miasto = tabela_gosp_miasto.get(j);
             int punkty = tabela_klub_pkt.get(j);
             
-            String tabela_insert = "INSERT INTO tabela(nazwa, punkty) VALUES ('" + nazwa + "', " + punkty + ");";
+            String tabela_insert = "INSERT INTO tabela(nazwa, miasto, punkty) VALUES ('" + nazwa + "', '" + miasto + "', " + punkty + ");";
             try{                
                 stat.execute(tabela_insert);
             } catch (SQLException e) {
-                System.err.println("ERROR select_pokaztabele_tabelapomocnicza: "+ e.getMessage());
+                System.err.println("ERROR select_pokaztabele_tabelapomocnicza_insert: "+ e.getMessage());
             }
             j++;
         }
         
         try{
-            ResultSet rs_tabela = stat.executeQuery("SELECT nazwa, punkty FROM tabela ORDER BY punkty DESC;");
+            ResultSet rs_tabela = stat.executeQuery("SELECT nazwa, miasto, punkty FROM tabela ORDER BY punkty DESC;");
             while(rs_tabela.next()){
                 k++;
                 String tabela_nazwa = rs_tabela.getString("nazwa");
+                String tabela_miasto = rs_tabela.getString("miasto");
                 int tabela_punkty = rs_tabela.getInt("punkty");
-                String rekord = k + ". " + tabela_nazwa + "\t\t" + tabela_punkty + "\n";
+                String rekord = k + ". " + tabela_nazwa + " " + tabela_miasto + "\t\t" + tabela_punkty + "\n";
                 tabela_koniec.add(rekord);               
             }
         } catch (SQLException e) {
