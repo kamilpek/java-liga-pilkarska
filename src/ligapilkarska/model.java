@@ -152,7 +152,7 @@ public class model {
                 String tabela_nazwa = rs_tabela.getString("nazwa");
                 String tabela_miasto = rs_tabela.getString("miasto");
                 int tabela_punkty = rs_tabela.getInt("punkty");
-                String rekord = k + ". " + tabela_nazwa + " " + tabela_miasto + "\t\t" + tabela_punkty + "\n";
+                String rekord = k + ". " + tabela_nazwa + " " + tabela_miasto + "\t" + tabela_punkty + "\n";
                 tabela_koniec.add(rekord);               
             }
         } catch (SQLException e) {
