@@ -73,7 +73,7 @@ public class model {
         ArrayList<Integer> tabela_gosc_pkt = new ArrayList<>();        
         ArrayList<String> tabela_klub_nazwa = new ArrayList<>();
         ArrayList<String> tabela_klub_miasto = new ArrayList<>();
-        ArrayList<Integer> tabela_klub_pkt = new ArrayList<>();
+        ArrayList<Integer> tabela_klub_pkt = new ArrayList<>();        
         
         int i = 0;
         int j = 0;
@@ -216,6 +216,113 @@ public class model {
         }
         return select_zlozeniekolejki.listawyniku;
 //        return null;
+    }
+    
+    public String select_pozostale_kluby(){
+        ArrayList<String> select_pozostale_kluby_lista = new ArrayList<>();
+        String lista_klubow = null;
+        
+        try {
+            ResultSet rs = stat.executeQuery("SELECT nazwa, miasto, strona, telefon, ulica, numer, barwy FROM klub;");
+            while (rs.next()){
+                String nazwa = rs.getString("nazwa");
+                String miasto = rs.getString("miasto");
+                String strona = rs.getString("strona");
+                String telefon = rs.getString("telefon");
+                String ulica = rs.getString("ulica");
+                String numer = rs.getString("numer");
+                String barwy = rs.getString("barwy");
+                String klub = nazwa +"\t"+ miasto +"\t"+ ulica +" "+ numer +"\t"+ barwy +"\t"+ strona +"\n";
+                select_pozostale_kluby_lista.add(klub);
+            }
+        } catch (SQLException e){
+            System.err.println("ERROR! select_pozostale_kluby: " + e.getMessage());
+            System.exit(0);
+        }
+        
+        lista_klubow = "";
+        for (String s : select_pozostale_kluby_lista) {
+            lista_klubow += s;
+        }
+        
+        return lista_klubow;
+    }
+    
+    public String select_pozostale_sedziowie(){
+        ArrayList<String> select_pozostale_siedziowie_lista = new ArrayList<>();
+        String lista_sedziow = null;
+        
+        try {
+            ResultSet rs = stat.executeQuery("SELECT imie, nazwisko, region, licencja FROM sedzia;");
+            while (rs.next()){
+                String imie = rs.getString("imie");
+                String nazwisko = rs.getString("nazwisko");
+                String region = rs.getString("region");
+                String licencja = rs.getString("licencja");                
+                String sedzia = imie +"\t"+ nazwisko +"\t"+ region +"\t"+ licencja + "\n";
+                select_pozostale_siedziowie_lista.add(sedzia);
+            }
+        } catch (SQLException e){
+            System.err.println("ERROR! select_pozostale_sedziowie: " + e.getMessage());
+            System.exit(0);
+        }
+        
+        lista_sedziow = "";
+        for (String s : select_pozostale_siedziowie_lista) {
+            lista_sedziow += s;
+        }        
+        return lista_sedziow;
+    }
+    
+        public String select_pozostale_trenerzy(){
+        ArrayList<String> select_pozostale_trenerzy_lista = new ArrayList<>();
+        String lista_trenerow = null;
+        
+        try {
+            ResultSet rs = stat.executeQuery("SELECT imie, nazwisko, licencja FROM trener;");
+            while (rs.next()){
+                String imie = rs.getString("imie");
+                String nazwisko = rs.getString("nazwisko");                
+                String licencja = rs.getString("licencja");                
+                String trener = imie +"\t"+ nazwisko +"\t"+ licencja + "\n";
+                select_pozostale_trenerzy_lista.add(trener);
+            }
+        } catch (SQLException e){
+            System.err.println("ERROR! select_pozostale_sedziowie: " + e.getMessage());
+            System.exit(0);
+        }
+        
+        lista_trenerow = "";
+        for (String s : select_pozostale_trenerzy_lista) {
+            lista_trenerow += s;
+        }        
+        return lista_trenerow;
+    }
+    
+    public String select_pozostale_stadiony(){
+        ArrayList<String> select_pozostale_stadiony_lista = new ArrayList<>();
+        String lista_stadionow = null;
+        
+        try {
+            ResultSet rs = stat.executeQuery("SELECT miasto, ulica, numer, pojemnosc FROM stadion;");
+            while (rs.next()){
+                String miasto = rs.getString("miasto");
+                String ulica = rs.getString("ulica");
+                String numer = rs.getString("numer");
+                int pojemnosc = rs.getInt("pojemnosc");                
+                String stadion = miasto +"\t"+ ulica +"\t"+ numer +"\t"+ pojemnosc + "\n";
+                select_pozostale_stadiony_lista.add(stadion);
+            }
+        } catch (SQLException e){
+            System.err.println("ERROR! select_pozostale_stadiony: " + e.getMessage());
+            System.exit(0);
+        }
+        
+        lista_stadionow = "";
+        for (String s : select_pozostale_stadiony_lista) {
+            lista_stadionow += s;
+        }        
+        return lista_stadionow;
     }
     
 }
