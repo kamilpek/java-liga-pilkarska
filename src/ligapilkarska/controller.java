@@ -6,6 +6,8 @@ public class controller {
 
     private final model liga_model;
     private final view liga_view;
+    private model liga_model_listener;
+    private view liga_view_listener;    
     
     private final String lista_1kolejka;
     private final String lista_2kolejka;
@@ -77,13 +79,19 @@ public class controller {
         lista_30kolejka = model.select_zlozeniekolejki(30);
         lista_pokaztabele = model.select_pokaztabele();
         
-        view.getprzycisk_pokaztabele().addActionListener(new NasluchiwaczPrzyciskow());
-        view.getprzycisk_2kolejka().addActionListener(new NasluchiwaczPrzyciskow());
-        view.getlista_selectkolejki().addActionListener(new NasluchiwaczPrzyciskow());
+        view.getprzycisk_pokaztabele().addActionListener(new Nasluchiwacz(liga_model, liga_view));
+        view.getlista_selectkolejki().addActionListener(new Nasluchiwacz(liga_model, liga_view));
+        
+        view.getprzycisk_oglowne_select().addActionListener(new Nasluchiwacz(liga_model, liga_view));
         
     }
 
-    private class NasluchiwaczPrzyciskow implements ActionListener {
+    private class Nasluchiwacz implements ActionListener {
+        
+        Nasluchiwacz(model model, view view){
+            liga_model_listener = model;
+            liga_view_listener = view;
+        }
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -93,7 +101,10 @@ public class controller {
             if (command.equals("pokaztabele")) {
                 view.select.setText(null);
                 view.select.setText(lista_pokaztabele);
-                System.out.println(lista_pokaztabele);
+            }
+            else if (command.equals("okno_select")){
+                liga_view_listener.okno_select.setVisible(true);
+                System.out.println("działa");
             }
                         
             switch(polecenie){
