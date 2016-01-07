@@ -21,7 +21,19 @@ public class controller {
         view.getlista_selectkolejki().addActionListener(new Nasluchiwacz(liga_model, liga_view));
         view.getlista_selectpozostale().addActionListener(new Nasluchiwacz(liga_model, liga_view));
         
-        view.getprzycisk_oglowne_select().addActionListener(new Nasluchiwacz(liga_model, liga_view));        
+        view.getprzycisk_oglowne_select().addActionListener(new Nasluchiwacz(liga_model, liga_view));
+        view.getprzycisk_oglowne_delete().addActionListener(new Nasluchiwacz(liga_model, liga_view));
+        view.getprzycisk_oglowne_update().addActionListener(new Nasluchiwacz(liga_model, liga_view));
+        view.getprzycisk_oglowne_insert().addActionListener(new Nasluchiwacz(liga_model, liga_view));
+        
+        view.getprzycisk_insert_powrot().addActionListener(new Nasluchiwacz(liga_model, liga_view));
+        view.getprzycisk_insert_sedzia_wykonaj().addActionListener(new Nasluchiwacz(liga_model, liga_view));
+        view.getprzycisk_insert_trener_wykonaj().addActionListener(new Nasluchiwacz(liga_model, liga_view));
+        view.getprzycisk_insert_stadion_wykonaj().addActionListener(new Nasluchiwacz(liga_model, liga_view));
+        
+        view.getprzycisk_update_powrot().addActionListener(new Nasluchiwacz(liga_model, liga_view));
+        
+        view.getprzycisk_delete_powrot().addActionListener(new Nasluchiwacz(liga_model, liga_view));
         
     }
 
@@ -35,14 +47,13 @@ public class controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             
-            lista_kolejki_polecenie = liga_view_listener.getlista_selectkolejki().getSelectedItem().toString();
-            lista_pozostale_polecenie =  liga_view_listener.getlista_selectpozostale().getSelectedItem().toString();
+            lista_kolejki_polecenie = view.getlista_selectkolejki().getSelectedItem().toString();
+            lista_pozostale_polecenie =  view.getlista_selectpozostale().getSelectedItem().toString();
             
             String command = e.getActionCommand();          
             
             switch(command){
                 case "okno_glowne" : {
-//                    System.out.println("lolx xDD");
                     liga_view_listener.okno_select.setVisible(false);
                     liga_view_listener.okno_insert.setVisible(false);
                     liga_view_listener.okno_update.setVisible(false);
@@ -67,9 +78,29 @@ public class controller {
                 } break;
                 case "pokaztabele" : {
                     String lista_pokaztabele = liga_model_listener.select_pokaztabele();
-                    liga_view_listener.poletekstowe_select_wynik.setText(null);
-                    liga_view_listener.poletekstowe_select_wynik.setText(lista_pokaztabele);
-                } break;                
+                    view.poletekstowe_select_wynik.setText(null);
+                    view.poletekstowe_select_wynik.setText(lista_pokaztabele);
+                } break;
+                case "insert_sedzia_wykonaj" : {
+                    String sedzia_imie = view.pole_insert_sedzia_imie.getText();
+                    String sedzia_nazwisko = view.pole_insert_sedzia_nazwisko.getText();
+                    String sedzia_region = view.pole_insert_sedzia_region.getText();
+                    String sedzia_licencja = view.pole_insert_sedzia_licencja.getText();
+                    liga_model_listener.insert_sedzia(sedzia_imie, sedzia_nazwisko, sedzia_licencja, sedzia_licencja);
+                } break;
+                case "insert_trener_wykonaj" : {
+                    String trener_imie = view.pole_insert_trener_imie.getText();
+                    String trener_nazwisko = view.pole_insert_trener_nazwisko.getText();
+                    String trenr_licencja = view.pole_insert_trener_licencja.getText();
+                    liga_model_listener.insert_trener(trener_imie, trener_nazwisko, trenr_licencja);
+                } break;
+                case "insert_stadion_wykonaj" : {
+                    String stadion_miasto = view.pole_insert_stadion_miasto.getText();
+                    String stadion_ulica = view.pole_insert_stadion_ulica.getText();
+                    String stadion_numer = view.pole_insert_stadion_numer.getText();
+                    String stadion_pojemnosc = view.pole_insert_stadion_pojemnosc.getText();
+                    liga_model_listener.insert_stadion(stadion_miasto, stadion_ulica, stadion_numer, stadion_pojemnosc);
+                } break;
             }
                         
             switch(lista_kolejki_polecenie){

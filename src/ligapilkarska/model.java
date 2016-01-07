@@ -325,6 +325,43 @@ public class model {
         return lista_stadionow;
     }
     
+    public void insert_stadion(String miasto, String ulica, String numer, String pojemnosc){
+        String zapytanie_insert_stadion_prefix = "INSERT INTO stadion (miasto, ulica, numer, pojemnosc) VALUES";
+        String zapytanie_insert_stadion_tresc = "(" + miasto + ", " + ulica + ", " + ", " + numer + ", " + pojemnosc + ")";
+        try {
+            String zapytanie_insert_stadion_pelne = zapytanie_insert_stadion_prefix + zapytanie_insert_stadion_tresc;
+            stat.execute(zapytanie_insert_stadion_pelne);
+        } catch (SQLException e) {
+            System.err.println("ERROR insert stadion : " + e.getMessage());
+            System.exit(0);
+        }
+    }
+    
+    public void insert_trener(String imie, String nazwisko, String licencja){
+        String zapytanie_insert_trener_prefix = "INSERT INTO trener (imie, nazwisko, licencja) VALUES";
+        String zapytanie_insert_trener_tresc = "(" + imie + ", " + nazwisko + ", " + licencja + ")";
+        try {
+            String zapytanie_insert_trener_pelne = zapytanie_insert_trener_prefix + zapytanie_insert_trener_tresc;
+            stat.execute(zapytanie_insert_trener_pelne);
+        } catch (SQLException e) {
+            System.err.println("ERROR insert trener: " + e.getMessage());
+            System.exit(0);
+        }
+        
+    }
+    
+    public void insert_sedzia(String imie, String nazwisko, String region, String licencja){
+        String zapytanie_insert_sedzia_prefix = "INSERT INTO sedzia (imie, nazwisko, region, licencja) VALUES";
+        String zapytanie_insert_sedzia_tresc = "(" + imie + ", " + nazwisko + ", " + region + ", " + licencja + ")";
+        try {
+            String zapytanie_insert_sedzia_pelne = zapytanie_insert_sedzia_prefix + zapytanie_insert_sedzia_tresc;
+            stat.execute(zapytanie_insert_sedzia_pelne);
+        } catch (SQLException e) {
+            System.err.println("ERROR insert sedzia: " + e.getMessage());
+            System.exit(0);
+        }
+    }
+    
 }
 
 class Select {
