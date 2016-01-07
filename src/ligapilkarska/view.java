@@ -69,6 +69,14 @@ public class view extends JFrame {
     public static JButton getprzycisk_delete_powrot(){
         return przycisk_delete_powrot;
     }
+    
+    public static JComboBox getlista_delete_tabele(){
+        return lista_delete_tabele;
+    }
+    
+    public static JButton getprzycisk_delete_wykonaj(){
+        return przycisk_delete_wykonaj;
+    }
 
     private int szerokosc = 800;
     private int wysokosc = 600;
@@ -282,9 +290,11 @@ public class view extends JFrame {
         okno_delete.add(panel_delete_1);
         panel_delete_1.add(lista_delete_tabele);
         panel_delete_1.add(pole_delete_rekord);
+        przycisk_delete_wykonaj.setActionCommand("delete_wykonaj");
         panel_delete_1.add(przycisk_delete_wykonaj);
         panel_delete_2.setLayout(new FlowLayout());
         okno_delete.add(panel_delete_2);
+        przycisk_delete_dropbazy.setActionCommand("delete_dropbaza");
         panel_delete_2.add(przycisk_delete_dropbazy);
     }    
 }

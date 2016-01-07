@@ -211,8 +211,7 @@ public class model {
             ResultSet rs = stat.executeQuery(select_kolejka);
             select_zlozeniekolejki = new Select(stat, rs);
         } catch (SQLException e) {
-            System.err.println("ERROR!!: "+ e.getMessage());
-            System.exit(0);
+            System.err.println("ERROR!! select_zlozeniekolejki: "+ e.getMessage());
         }
         return select_zlozeniekolejki.listawyniku;
 //        return null;
@@ -237,7 +236,6 @@ public class model {
             }
         } catch (SQLException e){
             System.err.println("ERROR! select_pozostale_kluby: " + e.getMessage());
-            System.exit(0);
         }
         
         lista_klubow = "";
@@ -264,7 +262,6 @@ public class model {
             }
         } catch (SQLException e){
             System.err.println("ERROR! select_pozostale_sedziowie: " + e.getMessage());
-            System.exit(0);
         }
         
         lista_sedziow = "";
@@ -289,7 +286,6 @@ public class model {
             }
         } catch (SQLException e){
             System.err.println("ERROR! select_pozostale_sedziowie: " + e.getMessage());
-            System.exit(0);
         }
         
         lista_trenerow = "";
@@ -315,7 +311,6 @@ public class model {
             }
         } catch (SQLException e){
             System.err.println("ERROR! select_pozostale_stadiony: " + e.getMessage());
-            System.exit(0);
         }
         
         lista_stadionow = "";
@@ -333,7 +328,6 @@ public class model {
             stat.execute(zapytanie_insert_stadion_pelne);
         } catch (SQLException e) {
             System.err.println("ERROR insert stadion : " + e.getMessage());
-            System.exit(0);
         }
     }
     
@@ -345,7 +339,6 @@ public class model {
             stat.execute(zapytanie_insert_trener_pelne);
         } catch (SQLException e) {
             System.err.println("ERROR insert trener: " + e.getMessage());
-            System.exit(0);
         }
         
     }
@@ -358,10 +351,39 @@ public class model {
             stat.execute(zapytanie_insert_sedzia_pelne);
         } catch (SQLException e) {
             System.err.println("ERROR insert sedzia: " + e.getMessage());
-            System.exit(0);
         }
     }
     
+    public void delete_dropbaza(){
+        String zapytanie_drop_mecz = "DROP TABLE mecz CASCADE;";
+        String zapytanie_drop_zawodnik = "DROP TABLE zawodnik CASCADE;";
+        String zapytanie_drop_klub = "DROP TABLE klub CASCADE;";
+        String zapytanie_drop_trener = "DROP TABLE trener CASCADE;";
+        String zapytanie_drop_stadion = "DROP TABLE stadion CASCADE;";
+        String zapytanie_drop_sedzia = "DROP TABLE sedzia CASCADE;";
+        String zapytanie_drop_tabela = "DROP TABLE tabela;";
+        try {
+            stat.execute(zapytanie_drop_mecz);
+            stat.execute(zapytanie_drop_zawodnik);
+            stat.execute(zapytanie_drop_klub);
+            stat.execute(zapytanie_drop_trener);
+            stat.execute(zapytanie_drop_stadion);
+            stat.execute(zapytanie_drop_sedzia);
+            stat.execute(zapytanie_drop_tabela);
+        } catch (SQLException e){
+            System.err.println("ERROR delete drop baza: " + e.getMessage());           
+        }
+    }
+    
+    public void delete_wykonaj(String tabela, String rekord){
+        String zapytanie_delete_prefix = "DELETE FROM ";
+        String zapytanie_delete_cale = zapytanie_delete_prefix + tabela + " WHERE id = " + rekord + ";";
+        try {
+            stat.executeQuery(zapytanie_delete_cale);
+        } catch (SQLException e){
+            System.err.println("ERROR delete wykonaj: " + e.getMessage());           
+        }
+    }
 }
 
 class Select {

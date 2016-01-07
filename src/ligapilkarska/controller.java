@@ -11,6 +11,7 @@ public class controller {
     
     String lista_kolejki_polecenie = null;
     String lista_pozostale_polecenie = null;
+    String delete_lista_tabele = null;
 
     controller(model model, view view){
         liga_model = model;
@@ -34,6 +35,7 @@ public class controller {
         view.getprzycisk_update_powrot().addActionListener(new Nasluchiwacz(liga_model, liga_view));
         
         view.getprzycisk_delete_powrot().addActionListener(new Nasluchiwacz(liga_model, liga_view));
+        view.getprzycisk_delete_wykonaj().addActionListener(new Nasluchiwacz(liga_model, liga_view));
         
     }
 
@@ -49,6 +51,7 @@ public class controller {
             
             lista_kolejki_polecenie = view.getlista_selectkolejki().getSelectedItem().toString();
             lista_pozostale_polecenie =  view.getlista_selectpozostale().getSelectedItem().toString();
+            delete_lista_tabele = view.getlista_delete_tabele().getSelectedItem().toString();
             
             String command = e.getActionCommand();          
             
@@ -100,6 +103,13 @@ public class controller {
                     String stadion_numer = view.pole_insert_stadion_numer.getText();
                     String stadion_pojemnosc = view.pole_insert_stadion_pojemnosc.getText();
                     liga_model_listener.insert_stadion(stadion_miasto, stadion_ulica, stadion_numer, stadion_pojemnosc);
+                } break;
+                case "delete_wykonaj" : {
+                    String delete_rekord = view.pole_delete_rekord.getText();
+                    liga_model_listener.delete_wykonaj(delete_lista_tabele, delete_rekord);
+                } break;
+                case "delete_dropbaza" : {
+                    liga_model_listener.delete_dropbaza();
                 } break;
             }
                         
@@ -236,8 +246,7 @@ public class controller {
                 } break;
                 case "Trenerzy" : {
                     String lista_pozostale_trenerzy = liga_model_listener.select_pozostale_trenerzy();
-                    view.poletekstowe_select_wynik.setText(lista_pozostale_trenerzy);
-                    
+                    view.poletekstowe_select_wynik.setText(lista_pozostale_trenerzy);                    
                 } break;
                 case "Stadiony" : {
                     String lista_pozostale_stadiony = liga_model_listener.select_pozostale_stadiony();
