@@ -395,7 +395,7 @@ public class view extends JFrame {
         panel_update_trener.add(lista_update_trener_kolumny);
         panel_update_trener.add(pole_update_trener_rekord);
         panel_update_trener.add(pole_update_trener_tresc);
-        przycisk_update_trener_wykonaj.setActionCommand("update_trenera_wykonaj");
+        przycisk_update_trener_wykonaj.setActionCommand("update_trener_wykonaj");
         panel_update_trener.add(przycisk_update_trener_wykonaj);
         
         panel_delete_0.setLayout(new FlowLayout());
