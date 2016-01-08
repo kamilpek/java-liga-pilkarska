@@ -30,6 +30,7 @@ public class controller {
         view.getprzycisk_oglowne_delete().addActionListener(new Nasluchiwacz(liga_model, liga_view));
         view.getprzycisk_oglowne_update().addActionListener(new Nasluchiwacz(liga_model, liga_view));
         view.getprzycisk_oglowne_insert().addActionListener(new Nasluchiwacz(liga_model, liga_view));
+        view.getprzycisk_oglowne_wylacz().addActionListener(new Nasluchiwacz(liga_model, liga_view));
         
         view.getprzycisk_insert_powrot().addActionListener(new Nasluchiwacz(liga_model, liga_view));
         view.getprzycisk_insert_sedzia_wykonaj().addActionListener(new Nasluchiwacz(liga_model, liga_view));
@@ -145,8 +146,11 @@ public class controller {
                     liga_model_listener.delete_wykonaj(delete_lista_tabele, delete_rekord);
                 } break;
                 case "delete_dropbaza" : {
-                    System.out.println("drop");
                     liga_model_listener.delete_dropbaza();
+                } break;
+                case "wylacz_program" : {
+                    System.out.println("Wyłączono.");
+                    liga_model_listener.wylacz_program();
                 } break;
             }
                         

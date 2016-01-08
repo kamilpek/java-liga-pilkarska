@@ -29,6 +29,10 @@ public class view extends JFrame {
     public static JButton getprzycisk_oglowne_delete(){
         return przycisk_oglowne_delete;
     }
+    
+    public static JButton getprzycisk_oglowne_wylacz(){
+        return przycisk_oglowne_wylacz;
+    }
         
     public static JButton getprzycisk_pokaztabele() {
         return przycisk_select_pokaztabele;
@@ -149,6 +153,7 @@ public class view extends JFrame {
     public static JButton przycisk_oglowne_select = new JButton("[R] Tryb SELECT");    
     public static JButton przycisk_oglowne_update = new JButton("[U] Tryb UPDATE");
     public static JButton przycisk_oglowne_delete = new JButton("[D] Tryb DELETE");
+    public static JButton przycisk_oglowne_wylacz = new JButton("Wyłącz program.");
     
     public static JButton przycisk_powrot = new JButton("Powrót do Menu.");
     public static JButton przycisk_select_pokaztabele = new JButton("Pokaż Tabelę");
@@ -236,11 +241,10 @@ public class view extends JFrame {
         przycisk_oglowne_select.setActionCommand("okno_select");        
         przycisk_oglowne_update.setActionCommand("okno_update");
         przycisk_oglowne_delete.setActionCommand("okno_delete");
+        przycisk_oglowne_wylacz.setActionCommand("wylacz_program");
         
-        przycisk_insert_powrot.setActionCommand("okno_glowne");
-        
-        przycisk_update_powrot.setActionCommand("okno_glowne");
-        
+        przycisk_insert_powrot.setActionCommand("okno_glowne");        
+        przycisk_update_powrot.setActionCommand("okno_glowne");        
         przycisk_delete_powrot.setActionCommand("okno_glowne");
         
         panel_select.setLayout(new FlowLayout());
@@ -324,6 +328,7 @@ public class view extends JFrame {
         okno_glowne.add(przycisk_oglowne_select);        
         okno_glowne.add(przycisk_oglowne_update);
         okno_glowne.add(przycisk_oglowne_delete);
+        okno_glowne.add(przycisk_oglowne_wylacz);
         okno_glowne.setVisible(true);
         
         okno_insert.add(panel_insert_0);

@@ -428,6 +428,15 @@ public class model {
             System.err.println("ERROR delete wykonaj: " + e.getMessage());           
         }
     }
+    
+    public void wylacz_program(){
+        try {
+            stat.close();
+            System.exit(0);
+        } catch (SQLException e) {
+            System.err.println("ERROR wylacz_program: " + e.getMessage());
+        }
+    }
 }
 
 class Select {
