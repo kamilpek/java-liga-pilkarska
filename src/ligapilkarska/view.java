@@ -93,6 +93,7 @@ public class view extends JFrame {
     public JFrame okno_delete;
     
     private final JPanel panel_select = new JPanel();
+    private final JPanel panel_select_pole = new JPanel();
     private final JPanel panel_insert_0 = new JPanel();
     private final JPanel panel_insert_sedzia = new JPanel();
     private final JPanel panel_insert_trener = new JPanel();
@@ -120,7 +121,7 @@ public class view extends JFrame {
     public static JButton przycisk_powrot = new JButton("Powrót do Menu.");
     public static JButton przycisk_select_pokaztabele = new JButton("Pokaż Tabelę");
     public static JTextArea poletekstowe_select_wynik = new JTextArea(16, 60);
-    public static JScrollPane scrollpane_select_pola = new JScrollPane(poletekstowe_select_wynik);
+    public static JScrollPane scrollpane_select_pola = null;
     public static JComboBox lista_selectkolejki = new JComboBox();
     public static JComboBox lista_selectpozostale = new JComboBox();
     
@@ -161,7 +162,7 @@ public class view extends JFrame {
         
         okno_select = new JFrame("Liga Piłarska - wyswietlanie zawartosci Bazy Danych.");
         okno_select.setSize(szerokosc, wysokosc);
-        okno_select.setLayout(new GridLayout(2, 1));
+        okno_select.setLayout(new BorderLayout());
         okno_select.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         okno_insert = new JFrame("Liga Piłarska - wstawianie danych do Bazy Danych.");
@@ -276,13 +277,16 @@ public class view extends JFrame {
         przycisk_insert_stadion_wykonaj.setActionCommand("insert_stadion_wykonaj");
         panel_insert_stadion.add(przycisk_insert_stadion_wykonaj);
         
-        okno_select.add(panel_select);
+        okno_select.add(panel_select, BorderLayout.PAGE_START);
         panel_select.add(przycisk_select_pokaztabele);
         panel_select.add(lista_selectkolejki);
         panel_select.add(lista_selectpozostale);
         panel_select.add(przycisk_powrot);
-        panel_select.add(poletekstowe_select_wynik);
-        panel_select.add(scrollpane_select_pola);
+        okno_select.add(panel_select_pole);
+        scrollpane_select_pola = new JScrollPane(poletekstowe_select_wynik);
+        okno_select.add(panel_select_pole, BorderLayout.CENTER);
+        panel_select_pole.add(poletekstowe_select_wynik);
+        panel_select_pole.add(scrollpane_select_pola);
         
         panel_update_0.setLayout(new FlowLayout());
         okno_update.add(panel_update_0);

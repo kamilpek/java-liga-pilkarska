@@ -321,13 +321,15 @@ public class model {
     }
     
     public void insert_stadion(String miasto, String ulica, String numer, String pojemnosc){
+        String zapytanie_insert_stadion_pelne = null;
         String zapytanie_insert_stadion_prefix = "INSERT INTO stadion (miasto, ulica, numer, pojemnosc) VALUES";
-        String zapytanie_insert_stadion_tresc = "('" + miasto + "', '" + ulica + "', '" + "', '" + numer + "', '" + pojemnosc + "')";
+        String zapytanie_insert_stadion_tresc = "('" + miasto + "', '" + ulica + "', '" + numer + "', '" + pojemnosc + "')";
         try {
-            String zapytanie_insert_stadion_pelne = zapytanie_insert_stadion_prefix + zapytanie_insert_stadion_tresc;
+            zapytanie_insert_stadion_pelne = zapytanie_insert_stadion_prefix + zapytanie_insert_stadion_tresc;
             stat.execute(zapytanie_insert_stadion_pelne);
         } catch (SQLException e) {
             System.err.println("ERROR insert stadion : " + e.getMessage());
+            System.out.println(zapytanie_insert_stadion_pelne);
         }
     }
     
