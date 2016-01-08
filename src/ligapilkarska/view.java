@@ -77,6 +77,10 @@ public class view extends JFrame {
     public static JButton getprzycisk_delete_wykonaj(){
         return przycisk_delete_wykonaj;
     }
+    
+    public static JButton getprzycisk_delete_dropbazy(){
+        return przycisk_delete_dropbazy;
+    }
 
     private int szerokosc = 800;
     private int wysokosc = 600;

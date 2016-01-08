@@ -36,7 +36,7 @@ public class controller {
         
         view.getprzycisk_delete_powrot().addActionListener(new Nasluchiwacz(liga_model, liga_view));
         view.getprzycisk_delete_wykonaj().addActionListener(new Nasluchiwacz(liga_model, liga_view));
-        
+        view.getprzycisk_delete_dropbazy().addActionListener(new Nasluchiwacz(liga_model, liga_view));
     }
 
     private class Nasluchiwacz implements ActionListener {
@@ -89,7 +89,7 @@ public class controller {
                     String sedzia_nazwisko = view.pole_insert_sedzia_nazwisko.getText();
                     String sedzia_region = view.pole_insert_sedzia_region.getText();
                     String sedzia_licencja = view.pole_insert_sedzia_licencja.getText();
-                    liga_model_listener.insert_sedzia(sedzia_imie, sedzia_nazwisko, sedzia_licencja, sedzia_licencja);
+                    liga_model_listener.insert_sedzia(sedzia_imie, sedzia_nazwisko, sedzia_region, sedzia_licencja);
                 } break;
                 case "insert_trener_wykonaj" : {
                     String trener_imie = view.pole_insert_trener_imie.getText();
@@ -109,6 +109,7 @@ public class controller {
                     liga_model_listener.delete_wykonaj(delete_lista_tabele, delete_rekord);
                 } break;
                 case "delete_dropbaza" : {
+                    System.out.println("drop");
                     liga_model_listener.delete_dropbaza();
                 } break;
             }
