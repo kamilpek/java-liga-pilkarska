@@ -145,6 +145,26 @@ public class view extends JFrame {
     public static JButton przycisk_insert_stadion_wykonaj = new JButton("Wykonaj");
     
     public static JButton przycisk_update_powrot = new JButton("Powrót do menu");
+    public static JLabel etykieta_update_klub_info = new JLabel("Zmiana w tabeli klub");
+    public static JComboBox lista_update_klub_kolumny = new JComboBox();
+    public static JTextField pole_update_klub_rekord = new JTextField("Numer rekordu", 10);
+    public static JTextField pole_update_klub_tresc = new JTextField("Treść zmiany", 16);
+    public static JButton przycisk_update_klub_wykonaj = new JButton("Wykonaj");
+    public static JLabel etykieta_update_trener_info = new JLabel("Zmiana w tabeli trener");
+    public static JComboBox lista_update_trener_kolumny = new JComboBox();
+    public static JTextField pole_update_trener_rekord = new JTextField("Numer rekordu", 10);
+    public static JTextField pole_update_trener_tresc = new JTextField("Treść zmiany", 16);
+    public static JButton przycisk_update_trener_wykonaj = new JButton("Wykonaj");
+    public static JLabel etykieta_update_sedzia_info = new JLabel("Zmiana w tabeli sedzia");
+    public static JComboBox lista_update_sedzia_kolumny = new JComboBox();
+    public static JButton przycisk_update_sedzia_wykonaj = new JButton("Wykonaj");
+    public static JTextField pole_update_sedzia_rekord = new JTextField("Numer rekordu", 10);
+    public static JTextField pole_update_sedzia_tresc = new JTextField("Treść zmiany", 16);
+    public static JLabel etykieta_update_stadion_info = new JLabel("Zmiana w tabeli stadion");
+    public static JComboBox lista_update_stadion_kolumny = new JComboBox();
+    public static JTextField pole_update_stadion_rekord = new JTextField("Numer rekordu", 10);
+    public static JTextField pole_update_stadion_tresc = new JTextField("Treść zmiany", 16);
+    public static JButton przycisk_update_stadion_wykonaj = new JButton("Wykonaj");
     
     public static JButton przycisk_delete_powrot = new JButton("Powrot do menu");
     public static JComboBox lista_delete_tabele = new JComboBox();
@@ -172,7 +192,7 @@ public class view extends JFrame {
         
         okno_update = new JFrame("Liga Piłarska - aktualizowanie wybranej zawartości w Bazie Danych.");
         okno_update.setSize(szerokosc, wysokosc);
-        okno_update.setLayout(new GridLayout(3, 1));
+        okno_update.setLayout(new GridLayout(5, 1));
         okno_update.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         okno_delete = new JFrame("Liga Piłarska - usuwanie wybranej zawartości w Bazie Danych.");
@@ -236,6 +256,32 @@ public class view extends JFrame {
         lista_selectpozostale.addItem("Stadiony");
         lista_selectpozostale.addItem("Trenerzy");
         
+        lista_update_klub_kolumny.addItem("Wybierz kolumnę.");
+        lista_update_klub_kolumny.addItem("nazwa");
+        lista_update_klub_kolumny.addItem("strona");
+        lista_update_klub_kolumny.addItem("telefon");
+        lista_update_klub_kolumny.addItem("miasto");
+        lista_update_klub_kolumny.addItem("ulica");
+        lista_update_klub_kolumny.addItem("numer");
+        lista_update_klub_kolumny.addItem("barwy");
+        
+        lista_update_sedzia_kolumny.addItem("Wybierz kolumnę.");
+        lista_update_sedzia_kolumny.addItem("imie");
+        lista_update_sedzia_kolumny.addItem("nazwisko");
+        lista_update_sedzia_kolumny.addItem("region");
+        lista_update_sedzia_kolumny.addItem("licencja");
+        
+        lista_update_trener_kolumny.addItem("Wybierz kolumnę.");
+        lista_update_trener_kolumny.addItem("imie");
+        lista_update_trener_kolumny.addItem("nazwisko");
+        lista_update_trener_kolumny.addItem("licencja");
+        
+        lista_update_stadion_kolumny.addItem("Wybierz kolumnę.");
+        lista_update_stadion_kolumny.addItem("miasto");
+        lista_update_stadion_kolumny.addItem("ulica");
+        lista_update_stadion_kolumny.addItem("numer");
+        lista_update_stadion_kolumny.addItem("pojemnosc");
+        
         lista_delete_tabele.addItem("Wybierz tabelę.");
         lista_delete_tabele.addItem("klub");
         lista_delete_tabele.addItem("stadion");
@@ -291,6 +337,34 @@ public class view extends JFrame {
         panel_update_0.setLayout(new FlowLayout());
         okno_update.add(panel_update_0);
         panel_update_0.add(przycisk_update_powrot);
+        okno_update.add(panel_update_klub);
+        panel_update_klub.add(etykieta_update_klub_info);
+        panel_update_klub.add(lista_update_klub_kolumny);
+        panel_update_klub.add(pole_update_klub_rekord);
+        panel_update_klub.add(pole_update_klub_tresc);
+        przycisk_update_klub_wykonaj.setActionCommand("update_klub_wykonaj");
+        panel_update_klub.add(przycisk_update_klub_wykonaj);
+        okno_update.add(panel_update_stadion);
+        panel_update_stadion.add(etykieta_update_stadion_info);
+        panel_update_stadion.add(lista_update_stadion_kolumny);
+        panel_update_stadion.add(pole_update_stadion_rekord);
+        panel_update_stadion.add(pole_update_stadion_tresc);
+        przycisk_update_stadion_wykonaj.setActionCommand("update_stadion_wykonaj");
+        panel_update_stadion.add(przycisk_update_stadion_wykonaj);
+        okno_update.add(panel_update_sedzia);
+        panel_update_sedzia.add(etykieta_update_sedzia_info);
+        panel_update_sedzia.add(lista_update_sedzia_kolumny);
+        panel_update_sedzia.add(pole_update_sedzia_rekord);
+        panel_update_sedzia.add(pole_update_sedzia_tresc);
+        przycisk_update_sedzia_wykonaj.setActionCommand("update_sedzia_wykonaj");
+        panel_update_sedzia.add(przycisk_update_sedzia_wykonaj);
+        okno_update.add(panel_update_trener);
+        panel_update_trener.add(etykieta_update_trener_info);
+        panel_update_trener.add(lista_update_trener_kolumny);
+        panel_update_trener.add(pole_update_trener_rekord);
+        panel_update_trener.add(pole_update_trener_tresc);
+        przycisk_update_trener_wykonaj.setActionCommand("update_trenera_wykonaj");
+        panel_update_trener.add(przycisk_update_trener_wykonaj);
         
         panel_delete_0.setLayout(new FlowLayout());
         okno_delete.add(panel_delete_0);
