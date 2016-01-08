@@ -66,6 +66,38 @@ public class view extends JFrame {
         return przycisk_update_powrot;
     }
     
+    public static JComboBox getlista_update_klub_kolumny(){
+        return lista_update_klub_kolumny;
+    }
+    
+    public static JComboBox getlista_update_trener_kolumny(){
+        return lista_update_trener_kolumny;
+    }
+    
+    public static JComboBox getlista_update_sedzia_kolumny(){
+        return lista_update_sedzia_kolumny;
+    }
+    
+    public static JComboBox getlista_update_stadion_kolumny(){
+        return lista_update_stadion_kolumny;
+    }
+    
+    public static JButton getprzycisk_update_klub_wykonaj(){
+        return przycisk_update_klub_wykonaj;
+    }
+    
+    public static JButton getprzycisk_update_trener_wykonaj(){
+        return przycisk_update_trener_wykonaj;
+    }
+    
+    public static JButton getprzycisk_update_sedzia_wykonaj(){
+        return przycisk_update_sedzia_wykonaj;
+    }
+    
+    public static JButton getprzycisk_update_stadion_wykonaj(){
+        return przycisk_update_stadion_wykonaj;
+    }
+    
     public static JButton getprzycisk_delete_powrot(){
         return przycisk_delete_powrot;
     }

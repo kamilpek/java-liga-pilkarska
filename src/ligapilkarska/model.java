@@ -354,9 +354,49 @@ public class model {
             stat.execute(zapytanie_insert_sedzia_pelne);
         } catch (SQLException e) {
             System.err.println("ERROR insert sedzia: " + e.getMessage());
-            System.err.println(zapytanie_insert_sedzia_pelne);
         }
     }
+    
+    public void update_klub(String kolumna, String rekord, String tresc){
+        String zapytanie_update_klub = null;
+        try {
+            zapytanie_update_klub = "UPDATE klub SET " + kolumna + " = '" + tresc + "' WHERE id=" + rekord + ";";
+            stat.execute(zapytanie_update_klub);
+        } catch (SQLException e) {
+            System.err.println("ERROR update klub: " + e.getMessage());
+        }
+    }
+    
+    public void update_sedzia(String kolumna, String rekord, String tresc){
+        String zapytanie_update_sedzia = null;
+        try {
+            zapytanie_update_sedzia = "UPDATE sedzia SET " + kolumna + " = '" + tresc + "' WHERE id=" + rekord + ";";
+            stat.execute(zapytanie_update_sedzia);
+        } catch (SQLException e) {
+            System.err.println("ERROR update sedzia: " + e.getMessage());
+        }
+    }
+    
+    public void update_trener(String kolumna, String rekord, String tresc){
+        String zapytanie_update_trener = null;
+        try {
+            zapytanie_update_trener = "UPDATE trener SET " + kolumna + " = '" + tresc + "' WHERE id=" + rekord + ";";
+            stat.execute(zapytanie_update_trener);
+        } catch (SQLException e) {
+            System.err.println("ERROR update_trener: " + e.getMessage());
+        }
+    }
+    
+    public void update_stadion(String kolumna, String rekord, String tresc){
+        String zapytanie_update_stadion = null;
+        try {
+            zapytanie_update_stadion = "UPDATE stadion SET " + kolumna + " = '" + tresc + "' WHERE id=" + rekord + ";";
+            stat.execute(zapytanie_update_stadion);
+        } catch (SQLException e) {
+            System.err.println("ERROR update_stadion: " + e.getMessage());
+        }
+    }
+    
     
     public void delete_dropbaza(){
         String zapytanie_drop_mecz = "DROP TABLE mecz CASCADE;";

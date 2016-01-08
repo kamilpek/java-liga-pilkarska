@@ -12,6 +12,10 @@ public class controller {
     String lista_kolejki_polecenie = null;
     String lista_pozostale_polecenie = null;
     String delete_lista_tabele = null;
+    String update_lista_klub_kolumny = null;
+    String update_lista_sedzia_kolumny = null;
+    String update_lista_trener_kolumny = null;
+    String update_lista_stadion_kolumny = null;
 
     controller(model model, view view){
         liga_model = model;
@@ -33,6 +37,14 @@ public class controller {
         view.getprzycisk_insert_stadion_wykonaj().addActionListener(new Nasluchiwacz(liga_model, liga_view));
         
         view.getprzycisk_update_powrot().addActionListener(new Nasluchiwacz(liga_model, liga_view));
+        view.getprzycisk_update_klub_wykonaj().addActionListener(new Nasluchiwacz(liga_model, liga_view));
+        view.getprzycisk_update_sedzia_wykonaj().addActionListener(new Nasluchiwacz(liga_model, liga_view));
+        view.getprzycisk_update_trener_wykonaj().addActionListener(new Nasluchiwacz(liga_model, liga_view));
+        view.getprzycisk_update_stadion_wykonaj().addActionListener(new Nasluchiwacz(liga_model, liga_view));
+        view.getlista_update_klub_kolumny().addActionListener(new Nasluchiwacz(liga_model, liga_view));
+        view.getlista_update_sedzia_kolumny().addActionListener(new Nasluchiwacz(liga_model, liga_view));
+        view.getlista_update_trener_kolumny().addActionListener(new Nasluchiwacz(liga_model, liga_view));
+        view.getlista_update_stadion_kolumny().addActionListener(new Nasluchiwacz(liga_model, liga_view));
         
         view.getprzycisk_delete_powrot().addActionListener(new Nasluchiwacz(liga_model, liga_view));
         view.getprzycisk_delete_wykonaj().addActionListener(new Nasluchiwacz(liga_model, liga_view));
@@ -52,6 +64,10 @@ public class controller {
             lista_kolejki_polecenie = view.getlista_selectkolejki().getSelectedItem().toString();
             lista_pozostale_polecenie =  view.getlista_selectpozostale().getSelectedItem().toString();
             delete_lista_tabele = view.getlista_delete_tabele().getSelectedItem().toString();
+            update_lista_klub_kolumny = view.getlista_update_klub_kolumny().getSelectedItem().toString();
+            update_lista_sedzia_kolumny = view.getlista_update_sedzia_kolumny().getSelectedItem().toString();
+            update_lista_trener_kolumny = view.getlista_update_trener_kolumny().getSelectedItem().toString();
+            update_lista_stadion_kolumny = view.getlista_update_stadion_kolumny().getSelectedItem().toString();
             
             String command = e.getActionCommand();          
             
@@ -103,6 +119,26 @@ public class controller {
                     String stadion_numer = view.pole_insert_stadion_numer.getText();
                     String stadion_pojemnosc = view.pole_insert_stadion_pojemnosc.getText();
                     liga_model_listener.insert_stadion(stadion_miasto, stadion_ulica, stadion_numer, stadion_pojemnosc);
+                } break;
+                case "update_klub_wykonaj" : {
+                    String klub_rekord = view.pole_update_klub_rekord.getText();
+                    String klub_tresc = view.pole_update_klub_tresc.getText();
+                    liga_model_listener.update_klub(update_lista_klub_kolumny, klub_rekord, klub_tresc);
+                } break;
+                case "update_sedzia_wykonaj" : {
+                    String sedzia_rekord = view.pole_update_sedzia_rekord.getText();
+                    String sedzia_tresc = view.pole_update_sedzia_tresc.getText();
+                    liga_model_listener.update_sedzia(update_lista_sedzia_kolumny, sedzia_rekord, sedzia_tresc);
+                } break;
+                case "update_trener_wykonaj" : {
+                    String trener_rekord = view.pole_update_trener_rekord.getText();
+                    String trener_tresc = view.pole_update_trener_tresc.getText();
+                    liga_model_listener.update_trener(update_lista_trener_kolumny, trener_rekord, trener_tresc);
+                } break;
+                case "update_stadion_wykonaj" : {
+                    String stadion_rekord = view.pole_update_stadion_rekord.getText();
+                    String stadion_tresc = view.pole_update_stadion_tresc.getText();
+                    liga_model_listener.update_stadion(update_lista_stadion_kolumny, stadion_rekord, stadion_tresc);
                 } break;
                 case "delete_wykonaj" : {
                     String delete_rekord = view.pole_delete_rekord.getText();
