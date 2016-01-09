@@ -7,7 +7,7 @@ import java.util.*;
 public class view extends JFrame {
 
     private final model liga_model;
-    private java.util.ArrayList<String> lista = new ArrayList<>();
+    private final java.util.ArrayList<String> lista = new ArrayList<>();
 
     view(model model) {
         liga_model = model;

@@ -1,13 +1,16 @@
 package ligapilkarska;
 
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class controller {
 
     private final model liga_model;
     private final view liga_view;
+    private final dao dao_baza;
     private model liga_model_listener;
-    private view liga_view_listener;    
+    private view liga_view_listener; 
+    private dao liga_dao_listener;
     
     String lista_kolejki_polecenie = null;
     String lista_pozostale_polecenie = null;
@@ -15,11 +18,13 @@ public class controller {
     String update_lista_klub_kolumny = null;
     String update_lista_sedzia_kolumny = null;
     String update_lista_trener_kolumny = null;
-    String update_lista_stadion_kolumny = null;
+    String update_lista_stadion_kolumny = null;    
 
     controller(model model, view view){
+       
         liga_model = model;
-        liga_view = view;        
+        liga_view = view;
+        dao_baza = liga_model.getdao();
         
         view.getprzycisk_pokaztabele().addActionListener(new Nasluchiwacz(liga_model, liga_view));
         view.getprzycisk_select_powrot().addActionListener(new Nasluchiwacz(liga_model, liga_view));
@@ -30,7 +35,7 @@ public class controller {
         view.getprzycisk_oglowne_delete().addActionListener(new Nasluchiwacz(liga_model, liga_view));
         view.getprzycisk_oglowne_update().addActionListener(new Nasluchiwacz(liga_model, liga_view));
         view.getprzycisk_oglowne_insert().addActionListener(new Nasluchiwacz(liga_model, liga_view));
-        view.getprzycisk_oglowne_wylacz().addActionListener(new Nasluchiwacz(liga_model, liga_view));
+        view.getprzycisk_oglowne_wylacz().addActionListener(new Nasluchiwacz(dao_baza, liga_view));
         
         view.getprzycisk_insert_powrot().addActionListener(new Nasluchiwacz(liga_model, liga_view));
         view.getprzycisk_insert_sedzia_wykonaj().addActionListener(new Nasluchiwacz(liga_model, liga_view));
@@ -56,6 +61,11 @@ public class controller {
         
         Nasluchiwacz(model model, view view){
             liga_model_listener = model;
+            liga_view_listener = view;
+        }
+        
+        Nasluchiwacz(dao dao_baza, view view){
+            liga_dao_listener = dao_baza;
             liga_view_listener = view;
         }
 
@@ -96,204 +106,141 @@ public class controller {
                     liga_view_listener.okno_glowne.setVisible(false);
                     liga_view_listener.okno_delete.setVisible(true);                    
                 } break;
-                case "pokaztabele" : {
-                    String lista_pokaztabele = liga_model_listener.select_pokaztabele();
+                case "pokaztabele": {
+                    ArrayList<String> lista_pokaztabele = liga_dao_listener.select_pokaztabele();
                     view.poletekstowe_select_wynik.setText(null);
-                    view.poletekstowe_select_wynik.setText(lista_pokaztabele);
-                } break;
+                    String listawyniku = "";
+                    for (String s : lista_pokaztabele) {
+                        listawyniku += s; }
+                    view.poletekstowe_select_wynik.setText(listawyniku);
+                }
+                break;
                 case "insert_sedzia_wykonaj" : {
                     String sedzia_imie = view.pole_insert_sedzia_imie.getText();
                     String sedzia_nazwisko = view.pole_insert_sedzia_nazwisko.getText();
                     String sedzia_region = view.pole_insert_sedzia_region.getText();
                     String sedzia_licencja = view.pole_insert_sedzia_licencja.getText();
-                    liga_model_listener.insert_sedzia(sedzia_imie, sedzia_nazwisko, sedzia_region, sedzia_licencja);
+                    liga_dao_listener.insert_sedzia(sedzia_imie, sedzia_nazwisko, sedzia_region, sedzia_licencja);
                 } break;
                 case "insert_trener_wykonaj" : {
                     String trener_imie = view.pole_insert_trener_imie.getText();
                     String trener_nazwisko = view.pole_insert_trener_nazwisko.getText();
                     String trenr_licencja = view.pole_insert_trener_licencja.getText();
-                    liga_model_listener.insert_trener(trener_imie, trener_nazwisko, trenr_licencja);
+                    liga_dao_listener.insert_trener(trener_imie, trener_nazwisko, trenr_licencja);
                 } break;
                 case "insert_stadion_wykonaj" : {
                     String stadion_miasto = view.pole_insert_stadion_miasto.getText();
                     String stadion_ulica = view.pole_insert_stadion_ulica.getText();
                     String stadion_numer = view.pole_insert_stadion_numer.getText();
                     String stadion_pojemnosc = view.pole_insert_stadion_pojemnosc.getText();
-                    liga_model_listener.insert_stadion(stadion_miasto, stadion_ulica, stadion_numer, stadion_pojemnosc);
+                    liga_dao_listener.insert_stadion(stadion_miasto, stadion_ulica, stadion_numer, stadion_pojemnosc);
                 } break;
                 case "update_klub_wykonaj" : {
                     String klub_rekord = view.pole_update_klub_rekord.getText();
                     String klub_tresc = view.pole_update_klub_tresc.getText();
-                    liga_model_listener.update_klub(update_lista_klub_kolumny, klub_rekord, klub_tresc);
+                    liga_dao_listener.update_klub(update_lista_klub_kolumny, klub_rekord, klub_tresc);
                 } break;
                 case "update_sedzia_wykonaj" : {
                     String sedzia_rekord = view.pole_update_sedzia_rekord.getText();
                     String sedzia_tresc = view.pole_update_sedzia_tresc.getText();
-                    liga_model_listener.update_sedzia(update_lista_sedzia_kolumny, sedzia_rekord, sedzia_tresc);
+                    liga_dao_listener.update_sedzia(update_lista_sedzia_kolumny, sedzia_rekord, sedzia_tresc);
                 } break;
                 case "update_trener_wykonaj" : {
                     String trener_rekord = view.pole_update_trener_rekord.getText();
                     String trener_tresc = view.pole_update_trener_tresc.getText();
-                    liga_model_listener.update_trener(update_lista_trener_kolumny, trener_rekord, trener_tresc);
+                    liga_dao_listener.update_trener(update_lista_trener_kolumny, trener_rekord, trener_tresc);
                 } break;
                 case "update_stadion_wykonaj" : {
                     String stadion_rekord = view.pole_update_stadion_rekord.getText();
                     String stadion_tresc = view.pole_update_stadion_tresc.getText();
-                    liga_model_listener.update_stadion(update_lista_stadion_kolumny, stadion_rekord, stadion_tresc);
+                    liga_dao_listener.update_stadion(update_lista_stadion_kolumny, stadion_rekord, stadion_tresc);
                 } break;
                 case "delete_wykonaj" : {
                     String delete_rekord = view.pole_delete_rekord.getText();
-                    liga_model_listener.delete_wykonaj(delete_lista_tabele, delete_rekord);
+                    liga_dao_listener.delete_wykonaj(delete_lista_tabele, delete_rekord);
                 } break;
                 case "delete_dropbaza" : {
-                    liga_model_listener.delete_dropbaza();
+                    liga_dao_listener.delete_dropbaza();
                 } break;
                 case "wylacz_program" : {
                     System.out.println("Wyłączono.");
-                    liga_model_listener.wylacz_program();
+                    liga_dao_listener.wylacz_program();
                 } break;
             }
                         
+            select_kolejka_wyswietl select_kolejka = null;
+            String kolejka_data = null;
+            
             switch(lista_kolejki_polecenie){
-                case "1. kolejka.": {
-                    String lista_1kolejka = liga_model_listener.select_zlozeniekolejki(1);
-                    view.poletekstowe_select_wynik.setText(lista_1kolejka);
-                } break;
-                case "2. kolejka.": {
-                    String lista_2kolejka = liga_model_listener.select_zlozeniekolejki(2);
-                    view.poletekstowe_select_wynik.setText(lista_2kolejka);
-                } break;
-                case "3. kolejka.": { 
-                    String lista_3kolejka = liga_model_listener.select_zlozeniekolejki(3);
-                    view.poletekstowe_select_wynik.setText(lista_3kolejka);
-                } break;
-                case "4. kolejka.": { 
-                    String lista_4kolejka = liga_model_listener.select_zlozeniekolejki(4);
-                    view.poletekstowe_select_wynik.setText(lista_4kolejka);
-                } break;
-                case "5. kolejka.": {
-                    String lista_5kolejka = liga_model_listener.select_zlozeniekolejki(5);
-                    view.poletekstowe_select_wynik.setText(lista_5kolejka);
-                } break;
-                case "6. kolejka.": {
-                    String lista_6kolejka = liga_model_listener.select_zlozeniekolejki(6);
-                    view.poletekstowe_select_wynik.setText(lista_6kolejka);
-                } break;
-                case "7. kolejka.": {
-                    String lista_7kolejka = liga_model_listener.select_zlozeniekolejki(7);
-                    view.poletekstowe_select_wynik.setText(lista_7kolejka);
-                } break;
-                case "8. kolejka.": {
-                    String lista_8kolejka = liga_model_listener.select_zlozeniekolejki(8);
-                    view.poletekstowe_select_wynik.setText(lista_8kolejka);
-                } break;
-                case "9. kolejka.": {
-                    String lista_9kolejka = liga_model_listener.select_zlozeniekolejki(9);
-                    view.poletekstowe_select_wynik.setText(lista_9kolejka);
-                } break;
-                case "10. kolejka.": {
-                    String lista_10kolejka = liga_model_listener.select_zlozeniekolejki(10);
-                    view.poletekstowe_select_wynik.setText(lista_10kolejka);
-                } break;
-                case "11. kolejka.": {
-                    String lista_11kolejka = liga_model_listener.select_zlozeniekolejki(11);
-                    view.poletekstowe_select_wynik.setText(lista_11kolejka);
-                } break;
-                case "12. kolejka.": {
-                    String lista_12kolejka = liga_model_listener.select_zlozeniekolejki(12);
-                    view.poletekstowe_select_wynik.setText(lista_12kolejka);
-                } break;
-                case "13. kolejka.": {
-                    String lista_13kolejka = liga_model_listener.select_zlozeniekolejki(13);
-                    view.poletekstowe_select_wynik.setText(lista_13kolejka);
-                } break;
-                case "14. kolejka.": {
-                    String lista_14kolejka = liga_model_listener.select_zlozeniekolejki(14);
-                    view.poletekstowe_select_wynik.setText(lista_14kolejka);
-                } break;
-                case "15. kolejka.": {
-                    String lista_15kolejka = liga_model_listener.select_zlozeniekolejki(15);
-                    view.poletekstowe_select_wynik.setText(lista_15kolejka);
-                } break;
-                case "16. kolejka.": {
-                    String lista_16kolejka = liga_model_listener.select_zlozeniekolejki(16);
-                    view.poletekstowe_select_wynik.setText(lista_16kolejka);
-                } break;
-                case "17. kolejka.": {
-                    String lista_17kolejka = liga_model_listener.select_zlozeniekolejki(17);
-                    view.poletekstowe_select_wynik.setText(lista_17kolejka);
-                } break;
-                case "18. kolejka.": {
-                    String lista_18kolejka = liga_model_listener.select_zlozeniekolejki(18);
-                    view.poletekstowe_select_wynik.setText(lista_18kolejka);
-                } break;
-                case "19. kolejka.": {
-                    String lista_19kolejka = liga_model_listener.select_zlozeniekolejki(19);
-                    view.poletekstowe_select_wynik.setText(lista_19kolejka);
-                } break;
-                case "20. kolejka.": {
-                    String lista_20kolejka = liga_model_listener.select_zlozeniekolejki(20);
-                    view.poletekstowe_select_wynik.setText(lista_20kolejka);
-                } break;
-                case "21. kolejka.": {
-                    String lista_21kolejka = liga_model_listener.select_zlozeniekolejki(21);
-                    view.poletekstowe_select_wynik.setText(lista_21kolejka);
-                } break;
-                case "22. kolejka.": {
-                    String lista_22kolejka = liga_model_listener.select_zlozeniekolejki(22);
-                    view.poletekstowe_select_wynik.setText(lista_22kolejka);
-                } break;
-                case "23. kolejka.": {
-                    String lista_23kolejka = liga_model_listener.select_zlozeniekolejki(23);
-                    view.poletekstowe_select_wynik.setText(lista_23kolejka);
-                } break;
-                case "24. kolejka.": {
-                    String lista_24kolejka = liga_model_listener.select_zlozeniekolejki(24);
-                    view.poletekstowe_select_wynik.setText(lista_24kolejka);
-                } break;
-                case "25. kolejka.": {
-                    String lista_25kolejka = liga_model_listener.select_zlozeniekolejki(25);
-                    view.poletekstowe_select_wynik.setText(lista_25kolejka);
-                } break;
-                case "26. kolejka.": {
-                    String lista_26kolejka = liga_model_listener.select_zlozeniekolejki(26);
-                    view.poletekstowe_select_wynik.setText(lista_26kolejka);
-                } break;
-                case "27. kolejka.": {
-                    String lista_27kolejka = liga_model_listener.select_zlozeniekolejki(27);
-                    view.poletekstowe_select_wynik.setText(lista_27kolejka);
-                } break;
-                case "28. kolejka.": {
-                    String lista_28kolejka = liga_model_listener.select_zlozeniekolejki(28);
-                    view.poletekstowe_select_wynik.setText(lista_28kolejka);
-                } break;
-                case "29. kolejka.": {
-                    String lista_29kolejka = liga_model_listener.select_zlozeniekolejki(29);
-                    view.poletekstowe_select_wynik.setText(lista_29kolejka);
-                } break;
-                case "30. kolejka.": {
-                    String lista_30kolejka = liga_model_listener.select_zlozeniekolejki(30);
-                    view.poletekstowe_select_wynik.setText(lista_30kolejka);
-                } break;                   
+                case "1. kolejka.": kolejka_data = "WHERE data BETWEEN '2013/08/10' AND '2013/08/11';"; select_kolejka = new select_kolejka_wyswietl(kolejka_data); break;
+                case "2. kolejka.": kolejka_data = "WHERE data BETWEEN '2013/08/14' AND '2013/08/15';"; select_kolejka = new select_kolejka_wyswietl(kolejka_data); break;
+                case "3. kolejka.": kolejka_data = "WHERE data BETWEEN '2013/08/17' AND '2013/08/18';"; select_kolejka = new select_kolejka_wyswietl(kolejka_data); break;
+                case "4. kolejka.": kolejka_data = "WHERE data BETWEEN '2013/08/24' AND '2013/08/25';"; select_kolejka = new select_kolejka_wyswietl(kolejka_data); break;
+                case "5. kolejka.": kolejka_data = "WHERE data BETWEEN '2013/08/30' AND '2013/09/01';"; select_kolejka = new select_kolejka_wyswietl(kolejka_data); break;
+                case "6. kolejka.": kolejka_data = "WHERE data BETWEEN '2013/09/06' AND '2013/09/07';"; select_kolejka = new select_kolejka_wyswietl(kolejka_data); break;
+                case "7. kolejka.": kolejka_data = "WHERE data BETWEEN '2013/09/14' AND '2013/09/15';"; select_kolejka = new select_kolejka_wyswietl(kolejka_data); break;
+                case "8. kolejka.": kolejka_data = "WHERE data BETWEEN '2013/09/21' AND '2013/09/22';"; select_kolejka = new select_kolejka_wyswietl(kolejka_data); break;
+                case "9. kolejka.": kolejka_data = "WHERE data BETWEEN '2013/09/28' AND '2013/09/29';"; select_kolejka = new select_kolejka_wyswietl(kolejka_data); break;
+                case "10. kolejka.": kolejka_data = "WHERE data BETWEEN '2013/10/05' AND '2013/10/06';"; select_kolejka = new select_kolejka_wyswietl(kolejka_data); break;
+                case "11. kolejka.": kolejka_data = "WHERE data BETWEEN '2013/10/12' AND '2013/10/13';"; select_kolejka = new select_kolejka_wyswietl(kolejka_data); break;
+                case "12. kolejka.": kolejka_data = "WHERE data BETWEEN '2013/10/18' AND '2013/10/19';"; select_kolejka = new select_kolejka_wyswietl(kolejka_data); break;
+                case "13. kolejka.": kolejka_data = "WHERE data BETWEEN '2013/10/26' AND '2013/10/27';"; select_kolejka = new select_kolejka_wyswietl(kolejka_data); break;
+                case "14. kolejka.": kolejka_data = "WHERE data BETWEEN '2013/11/02' AND '2013/11/03';"; select_kolejka = new select_kolejka_wyswietl(kolejka_data); break;
+                case "15. kolejka.": kolejka_data = "WHERE data BETWEEN '2013/11/09' AND '2013/11/10';"; select_kolejka = new select_kolejka_wyswietl(kolejka_data); break;
+                case "16. kolejka.": kolejka_data = "WHERE data BETWEEN '2013/11/16' AND '2013/11/17';"; select_kolejka = new select_kolejka_wyswietl(kolejka_data); break;
+                case "17. kolejka.": kolejka_data = "WHERE data BETWEEN '2013/11/23' AND '2013/11/24';"; select_kolejka = new select_kolejka_wyswietl(kolejka_data); break;
+                case "18. kolejka.": kolejka_data = "WHERE data BETWEEN '2014/03/15' AND '2014/03/16';"; select_kolejka = new select_kolejka_wyswietl(kolejka_data); break;
+                case "19. kolejka.": kolejka_data = "WHERE data BETWEEN '2014/03/22' AND '2014/03/23';"; select_kolejka = new select_kolejka_wyswietl(kolejka_data); break;
+                case "20. kolejka.": kolejka_data = "WHERE data BETWEEN '2014/03/29' AND '2014/03/30';"; select_kolejka = new select_kolejka_wyswietl(kolejka_data); break;
+                case "21. kolejka.": kolejka_data = "WHERE data BETWEEN '2014/04/05' AND '2014/04/06';"; select_kolejka = new select_kolejka_wyswietl(kolejka_data); break;
+                case "22. kolejka.": kolejka_data = "WHERE data BETWEEN '2014/04/12' AND '2014/04/13';"; select_kolejka = new select_kolejka_wyswietl(kolejka_data); break;
+                case "23. kolejka.": kolejka_data = "WHERE data BETWEEN '2014/04/18' AND '2014/04/19';"; select_kolejka = new select_kolejka_wyswietl(kolejka_data); break;
+                case "24. kolejka.": kolejka_data = "WHERE data BETWEEN '2014/04/26' AND '2014/04/27';"; select_kolejka = new select_kolejka_wyswietl(kolejka_data); break;
+                case "25. kolejka.": kolejka_data = "WHERE data BETWEEN '2014/05/03' AND '2014/05/04';"; select_kolejka = new select_kolejka_wyswietl(kolejka_data); break;
+                case "26. kolejka.": kolejka_data = "WHERE data BETWEEN '2014/05/10' AND '2014/05/11';"; select_kolejka = new select_kolejka_wyswietl(kolejka_data); break;
+                case "27. kolejka.": kolejka_data = "WHERE data BETWEEN '2014/05/17' AND '2014/05/18';"; select_kolejka = new select_kolejka_wyswietl(kolejka_data); break;
+                case "28. kolejka.": kolejka_data = "WHERE data BETWEEN '2014/05/24' AND '2014/05/25';"; select_kolejka = new select_kolejka_wyswietl(kolejka_data); break;
+                case "29. kolejka.": kolejka_data = "WHERE data BETWEEN '2014/05/31' AND '2014/06/01';"; select_kolejka = new select_kolejka_wyswietl(kolejka_data); break;
+                case "30. kolejka.": kolejka_data = "WHERE data BETWEEN '2014/06/06' AND '2014/06/07';"; select_kolejka = new select_kolejka_wyswietl(kolejka_data); break;                   
             }
+            
+            if (lista_kolejki_polecenie != null) {           
+            }
+            
+            ArrayList<String> select_lista_pozostale = null;
+            select_pozostale_wyswietl select = null;
+            
             switch (lista_pozostale_polecenie){
-                case "Kluby" : {
-                    String lista_pozostale_kluby = liga_model_listener.select_pozostale_kluby();                    
-                    view.poletekstowe_select_wynik.setText(lista_pozostale_kluby);
-                } break;
-                case "Sędziowie" : {
-                    String lista_pozostale_sedziowie = liga_model_listener.select_pozostale_sedziowie();
-                    view.poletekstowe_select_wynik.setText(lista_pozostale_sedziowie);
-                } break;
-                case "Trenerzy" : {
-                    String lista_pozostale_trenerzy = liga_model_listener.select_pozostale_trenerzy();
-                    view.poletekstowe_select_wynik.setText(lista_pozostale_trenerzy);
-                } break;
-                case "Stadiony" : {
-                    String lista_pozostale_stadiony = liga_model_listener.select_pozostale_stadiony();
-                    view.poletekstowe_select_wynik.setText(lista_pozostale_stadiony);
-                } break;
+                case "Kluby" : select_lista_pozostale = liga_dao_listener.select_pozostale_kluby(); select = new select_pozostale_wyswietl(select_lista_pozostale); break;
+                case "Sędziowie" : select_lista_pozostale = liga_dao_listener.select_pozostale_sedziowie(); select = new select_pozostale_wyswietl(select_lista_pozostale); break;
+                case "Trenerzy" : select_lista_pozostale = liga_dao_listener.select_pozostale_trenerzy(); select = new select_pozostale_wyswietl(select_lista_pozostale); break;
+                case "Stadiony" : select_lista_pozostale = liga_dao_listener.select_pozostale_stadiony(); select = new select_pozostale_wyswietl(select_lista_pozostale); break; }                    
             }
+        }
+    
+    public class select_pozostale_wyswietl {
+
+        select_pozostale_wyswietl(ArrayList<String> lista) {
+            ArrayList<String> select_lista_pozostale = lista;
+            String lista_wysw = "";
+            for (String s : select_lista_pozostale) {
+                lista_wysw += s;
+            }
+            view.poletekstowe_select_wynik.setText(lista_wysw);
+        }
+    }
+    
+    public class select_kolejka_wyswietl {
+
+        select_kolejka_wyswietl(String tabela) {
+            String kolejka_data = tabela;            
+            ArrayList<String> lista_kolejka = liga_dao_listener.select_zlozeniekolejki(kolejka_data);
+            view.poletekstowe_select_wynik.setText(null);
+            String listawyniku = "";
+            for (String s : lista_kolejka) {
+                listawyniku += s;
+            }
+            view.poletekstowe_select_wynik.setText(listawyniku);
         }
     }
 }
