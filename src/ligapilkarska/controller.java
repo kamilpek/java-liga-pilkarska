@@ -279,15 +279,15 @@ public class controller {
             switch (lista_pozostale_polecenie){
                 case "Kluby" : {
                     String lista_pozostale_kluby = liga_model_listener.select_pozostale_kluby();                    
-                    view.poletekstowe_select_wynik.setText(lista_pozostale_kluby);                   
+                    view.poletekstowe_select_wynik.setText(lista_pozostale_kluby);
                 } break;
                 case "Sędziowie" : {
                     String lista_pozostale_sedziowie = liga_model_listener.select_pozostale_sedziowie();
-                    view.poletekstowe_select_wynik.setText(lista_pozostale_sedziowie);                    
+                    view.poletekstowe_select_wynik.setText(lista_pozostale_sedziowie);
                 } break;
                 case "Trenerzy" : {
                     String lista_pozostale_trenerzy = liga_model_listener.select_pozostale_trenerzy();
-                    view.poletekstowe_select_wynik.setText(lista_pozostale_trenerzy);                    
+                    view.poletekstowe_select_wynik.setText(lista_pozostale_trenerzy);
                 } break;
                 case "Stadiony" : {
                     String lista_pozostale_stadiony = liga_model_listener.select_pozostale_stadiony();

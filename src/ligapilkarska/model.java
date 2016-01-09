@@ -278,7 +278,7 @@ public class model {
                 String ulica = rs.getString("ulica");
                 String numer = rs.getString("numer");
                 int pojemnosc = rs.getInt("pojemnosc");                
-                String stadion = id + ". " + miasto +"\t"+ ulica +"\t"+ numer +"\t"+ pojemnosc + "\n";
+                String stadion = id + ". " + miasto +"\t\t"+ ulica +"\t"+ numer +"\t"+ pojemnosc + "\n";
                 select_pozostale_stadiony_lista.add(stadion);
             }
         } catch (SQLException e){
