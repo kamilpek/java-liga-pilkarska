@@ -9,20 +9,10 @@ public class model {
     Statement stat = null;
     String url = null;
     String user = null;
-    String pass = null;
-    
-    String prefix_selectkolejki_query = "SELECT DATA, godzina, k1.nazwa ||' '|| k1.miasto AS gospodarz, gosp_pkt AS punkty, gosc_pkt AS punkty, k2.nazwa ||' '|| k2.miasto AS gosc FROM klub k1 INNER JOIN mecz ON k1.id=mecz.gospodarz INNER JOIN klub k2 ON mecz.gosc=k2.id ";
+    String pass = null;    
 
     model() {
         polaczenie();
-    }
-
-    model(String url, String user, String pass) {
-        polaczenie(url, user, pass);
-    }
-
-    model(String user, String pass) {
-        polaczenie(user, pass);
     }
 
     private Statement polaczenie() {
@@ -36,29 +26,6 @@ public class model {
             System.out.println("Połączono z Bazą!!");
         } catch (SQLException e) {
             System.err.println("ERROR!!: " + e.getMessage());
-            System.exit(0);
-        }
-        return this.stat;
-    }
-
-    private Statement polaczenie(String url, String user, String pass) {
-        try {
-            conn = DriverManager.getConnection(url, user, pass);
-            stat = conn.createStatement();
-        } catch (SQLException e) {
-            System.err.println("ERROR!!!: " + e.getMessage());
-            System.exit(0);
-        }
-        return this.stat;
-    }
-
-    private Statement polaczenie(String user, String pass) {
-        url = "jdbc:postgresql://localhost/liga";
-        try {
-            conn = DriverManager.getConnection(url, user, pass);
-            stat = conn.createStatement();
-        } catch (SQLException e) {
-            System.err.println("ERROR!!!!: " + e.getMessage());
             System.exit(0);
         }
         return this.stat;
@@ -169,6 +136,7 @@ public class model {
     
     public String select_zlozeniekolejki(int numer_kolejki){
         
+        String prefix_selectkolejki_query = "SELECT DATA, godzina, k1.nazwa ||' '|| k1.miasto AS gospodarz, gosp_pkt AS punkty, gosc_pkt AS punkty, k2.nazwa ||' '|| k2.miasto AS gosc FROM klub k1 INNER JOIN mecz ON k1.id=mecz.gospodarz INNER JOIN klub k2 ON mecz.gosc=k2.id ";
         String kolejka_data = null;
         
         switch (numer_kolejki){
@@ -222,8 +190,9 @@ public class model {
         String lista_klubow = null;
         
         try {
-            ResultSet rs = stat.executeQuery("SELECT nazwa, miasto, strona, telefon, ulica, numer, barwy FROM klub;");
+            ResultSet rs = stat.executeQuery("SELECT id, nazwa, miasto, strona, telefon, ulica, numer, barwy FROM klub ORDER BY id;");
             while (rs.next()){
+                int id = rs.getInt("id");
                 String nazwa = rs.getString("nazwa");
                 String miasto = rs.getString("miasto");
                 String strona = rs.getString("strona");
@@ -231,7 +200,7 @@ public class model {
                 String ulica = rs.getString("ulica");
                 String numer = rs.getString("numer");
                 String barwy = rs.getString("barwy");
-                String klub = nazwa +"\t"+ miasto +"\t"+ ulica +" "+ numer +"\t"+ barwy +"\t"+ strona +"\n";
+                String klub = id + ". " + nazwa +"\t"+ miasto +"\t"+ ulica +" "+ numer +"\t\t"+ barwy +"\t"+ strona +"\n";
                 select_pozostale_kluby_lista.add(klub);
             }
         } catch (SQLException e){
@@ -251,13 +220,14 @@ public class model {
         String lista_sedziow = null;
         
         try {
-            ResultSet rs = stat.executeQuery("SELECT imie, nazwisko, region, licencja FROM sedzia;");
+            ResultSet rs = stat.executeQuery("SELECT id, imie, nazwisko, region, licencja FROM sedzia ORDER BY id;");
             while (rs.next()){
+                int id = rs.getInt("id");
                 String imie = rs.getString("imie");
                 String nazwisko = rs.getString("nazwisko");
                 String region = rs.getString("region");
                 String licencja = rs.getString("licencja");                
-                String sedzia = imie +"\t"+ nazwisko +"\t"+ region +"\t"+ licencja + "\n";
+                String sedzia = id + ". " + imie +"\t"+ nazwisko +"\t"+ region +"\t"+ licencja + "\n";
                 select_pozostale_siedziowie_lista.add(sedzia);
             }
         } catch (SQLException e){
@@ -276,12 +246,13 @@ public class model {
         String lista_trenerow = null;
         
         try {
-            ResultSet rs = stat.executeQuery("SELECT imie, nazwisko, licencja FROM trener;");
+            ResultSet rs = stat.executeQuery("SELECT id, imie, nazwisko, licencja FROM trener ORDER BY id;");
             while (rs.next()){
+                int id = rs.getInt("id");
                 String imie = rs.getString("imie");
                 String nazwisko = rs.getString("nazwisko");                
                 String licencja = rs.getString("licencja");                
-                String trener = imie +"\t"+ nazwisko +"\t"+ licencja + "\n";
+                String trener = id + ". " + imie +"\t"+ nazwisko +"\t"+ licencja + "\n";
                 select_pozostale_trenerzy_lista.add(trener);
             }
         } catch (SQLException e){
@@ -300,13 +271,14 @@ public class model {
         String lista_stadionow = null;
         
         try {
-            ResultSet rs = stat.executeQuery("SELECT miasto, ulica, numer, pojemnosc FROM stadion;");
+            ResultSet rs = stat.executeQuery("SELECT id, miasto, ulica, numer, pojemnosc FROM stadion ORDER BY id;");
             while (rs.next()){
+                int id = rs.getInt("id");
                 String miasto = rs.getString("miasto");
                 String ulica = rs.getString("ulica");
                 String numer = rs.getString("numer");
                 int pojemnosc = rs.getInt("pojemnosc");                
-                String stadion = miasto +"\t"+ ulica +"\t"+ numer +"\t"+ pojemnosc + "\n";
+                String stadion = id + ". " + miasto +"\t"+ ulica +"\t"+ numer +"\t"+ pojemnosc + "\n";
                 select_pozostale_stadiony_lista.add(stadion);
             }
         } catch (SQLException e){
