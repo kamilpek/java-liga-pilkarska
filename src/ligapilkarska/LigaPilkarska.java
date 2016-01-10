@@ -4,7 +4,7 @@ package ligapilkarska;
  *
  * @author Kamil Pek [231050]
  * @since 27.12.2015
- * @version 1.3 Last update: 09.01.2015
+ * @version 1.3 Last update: 10.01.2015
  */
 public class LigaPilkarska {
 

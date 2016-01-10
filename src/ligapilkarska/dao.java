@@ -39,15 +39,12 @@ public class dao {
         ArrayList<Integer> tabela_gosp_pkt = new ArrayList<>();
         ArrayList<Integer> tabela_gosc_pkt = new ArrayList<>();
         ArrayList<String> tabela_klub_nazwa = new ArrayList<>();
-        ArrayList<String> tabela_klub_miasto = new ArrayList<>();
         ArrayList<Integer> tabela_klub_pkt = new ArrayList<>();
 
         int i = 0;
         int j = 0;
         int k = 0;
 
-        String tabela_koncowa = null;
-        String zaptyanie_pokaztabele = null;
         String zapytanie_punktygospodarz = "SELECT nazwa, miasto, sum(gosp_pkt) as punkty FROM mecz, klub WHERE mecz.gospodarz = klub.id GROUP BY nazwa, miasto ORDER BY nazwa;";
         String zapytanie_punktygosc = "SELECT nazwa, sum(gosc_pkt) as punkty FROM mecz, klub WHERE mecz.gosc = klub.id GROUP BY nazwa ORDER BY nazwa;";
         String tabela_create = "CREATE TABLE tabela(id serial, nazwa varchar(16) not null, miasto varchar(16) not null, punkty int not null);";
@@ -137,7 +134,6 @@ public class dao {
 
         try {
             ResultSet rs = stat.executeQuery(select_kolejka);
-//            select_zlozeniekolejki = new Select(stat, rs);
 
             while (rs.next()) {
                 String data = rs.getString("data");
@@ -160,8 +156,7 @@ public class dao {
 
     public ArrayList<String>  select_pozostale_kluby() {
         ArrayList<String> select_pozostale_kluby_lista = new ArrayList<>();
-        String lista_klubow = null;
-
+        
         try {
             ResultSet rs = stat.executeQuery("SELECT id, nazwa, miasto, strona, telefon, ulica, numer, barwy FROM klub ORDER BY id;");
             while (rs.next()) {
@@ -185,8 +180,7 @@ public class dao {
 
     public ArrayList<String> select_pozostale_sedziowie() {
         ArrayList<String> select_pozostale_siedziowie_lista = new ArrayList<>();
-        String lista_sedziow = null;
-
+        
         try {
             ResultSet rs = stat.executeQuery("SELECT id, imie, nazwisko, region, licencja FROM sedzia ORDER BY id;");
             while (rs.next()) {
@@ -201,18 +195,13 @@ public class dao {
         } catch (SQLException e) {
             System.err.println("ERROR! select_pozostale_sedziowie: " + e.getMessage());
         }
-
-        lista_sedziow = "";
-        for (String s : select_pozostale_siedziowie_lista) {
-            lista_sedziow += s;
-        }
+        
         return select_pozostale_siedziowie_lista;
     }
 
     public ArrayList<String> select_pozostale_trenerzy() {
         ArrayList<String> select_pozostale_trenerzy_lista = new ArrayList<>();
-        String lista_trenerow = null;
-
+        
         try {
             ResultSet rs = stat.executeQuery("SELECT id, imie, nazwisko, licencja FROM trener ORDER BY id;");
             while (rs.next()) {
@@ -231,8 +220,7 @@ public class dao {
 
     public ArrayList<String> select_pozostale_stadiony() {
         ArrayList<String> select_pozostale_stadiony_lista = new ArrayList<>();
-        String lista_stadionow = null;
-
+        
         try {
             ResultSet rs = stat.executeQuery("SELECT id, miasto, ulica, numer, pojemnosc FROM stadion ORDER BY id;");
             while (rs.next()) {
@@ -247,11 +235,7 @@ public class dao {
         } catch (SQLException e) {
             System.err.println("ERROR! select_pozostale_stadiony: " + e.getMessage());
         }
-
-        lista_stadionow = "";
-        for (String s : select_pozostale_stadiony_lista) {
-            lista_stadionow += s;
-        }
+        
         return select_pozostale_stadiony_lista;
     }
 

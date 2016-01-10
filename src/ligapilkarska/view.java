@@ -118,8 +118,8 @@ public class view extends JFrame {
         return przycisk_delete_dropbazy;
     }
 
-    private int szerokosc = 800;
-    private int wysokosc = 600;
+    private final int szerokosc = 800;
+    private final int wysokosc = 600;
     private final String tytul = "Liga Piłkarska";
 
     public JFrame okno_glowne;
@@ -139,12 +139,9 @@ public class view extends JFrame {
     private final JPanel panel_update_trener = new JPanel();
     private final JPanel panel_update_stadion = new JPanel(); 
     private final JPanel panel_update_klub = new JPanel(); 
-    private final JPanel panel_update_mecz = new JPanel(); 
     private final JPanel panel_delete_0 = new JPanel();
     private final JPanel panel_delete_1 = new JPanel();
     private final JPanel panel_delete_2 = new JPanel();
-    
-    private JLabel gornynapis;
     
     public static JButton przycisk_2kolejka = new JButton("2. Kolejka");
     public static JButton przycisk_test = new JButton("Przycisk testowy");    
@@ -247,8 +244,7 @@ public class view extends JFrame {
         przycisk_update_powrot.setActionCommand("okno_glowne");        
         przycisk_delete_powrot.setActionCommand("okno_glowne");
         
-        panel_select.setLayout(new FlowLayout());
-        gornynapis = new JLabel("test", JLabel.CENTER);        
+        panel_select.setLayout(new FlowLayout());       
         przycisk_select_pokaztabele.setActionCommand("pokaztabele");
         przycisk_powrot.setActionCommand("okno_glowne");
         przycisk_2kolejka.setActionCommand("2-kolejka");
